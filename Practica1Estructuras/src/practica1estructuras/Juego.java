@@ -7,7 +7,8 @@ public class Juego extends javax.swing.JFrame {
     int contador = 0 ;
     
     public void llenarNombres(String nombre){
-        Jugador actual = new Jugador(nombre);
+        Ficha fi = new Ficha();
+    Jugador actual = new Jugador(nombre, fi);
     if(primero == null){
     primero = actual;
     ultimo = actual;
