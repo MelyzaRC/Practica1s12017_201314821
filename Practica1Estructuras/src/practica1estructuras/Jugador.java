@@ -2,6 +2,7 @@
 //Se identifica con nombre
 //Tiene 7 fichas asignadas al azar
 //Guardar en lista circular
+//Metodos
 package practica1estructuras;
 
 import java.io.File;
@@ -27,47 +28,46 @@ public class Jugador {
         siguiente = null;
     }
 
-    public boolean addJugador(Jugador actual, Jugador primero, Jugador ultimo, Ficha ficha) {
-        try {
-            if (!verificarRepetido(actual.nombre.toString(), primero, ultimo)) {
-                if (primero == null) {
-                    primero = actual;
-                    ultimo = actual;
-                    return true;
-                } else {
-                    ultimo.siguiente = actual;
-                    ultimo = actual;
-                    ultimo.siguiente = primero;
-                    return true;
-                }
+    public boolean addJugador(Jugador actual, Jugador primero, Jugador ultimo) {
+       
+
+            if (primero == null) {
+                primero = actual;
+                ultimo = actual;
+                System.out.println("Ingresado");
+                return true;
             } else {
+            if (verificarRepetido(actual.nombre, primero, ultimo)) {
+                ultimo.siguiente = actual;
+                ultimo = actual;
+                ultimo.siguiente = primero;
+                System.out.println("Ingresado");
+                return true;
+            } else {
+                System.out.println("Repetido");
                 return false;
             }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
-            return false;
-        }
+            }
+        
 
     }
 
     public boolean verificarRepetido(String nombre, Jugador primero, Jugador ultimo) {
         int contadorRepetidos = 0;
-        Jugador bandera = new Jugador();
-        bandera = primero;
+        Jugador bandera =  primero;
         do {
-            if (bandera.nombre.toString().compareTo(nombre) == 0) {
+            if (bandera.nombre.equals(nombre)) {
                 contadorRepetidos++;
             }
 
             bandera = bandera.siguiente;
 
-        } while (bandera.siguiente != primero.siguiente);
+        } while (bandera.siguiente != null);
 
         if (contadorRepetidos == 0) {
-            return false; // No hay repetidos
+            return true; // No hay repetidos
         } else {
-            return true; // Si hay repetidos
+            return false; // Si hay repetidos
         }
     }
 
@@ -102,11 +102,11 @@ public class Jugador {
 
     }
 
-    public void GenerarImagen(String rutaDot, String rutaArchivo, String rutaImagen) {
+    public void GenerarImagen() {
         try {
-            String dotPath = rutaDot;
-            String fileInputPath = rutaArchivo;
-            String fileOutputPath = rutaImagen;
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\release\\Estructuras\\archivoJugador.txt";
+            String fileOutputPath = "C:\\release\\Estructuras\\imagenJugador.png";
             String tParam = "-Tjpg";
             String tOParam = "-o";
             String[] cmd = new String[5];
@@ -121,6 +121,10 @@ public class Jugador {
             JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
         } finally {
         }
+    }
+
+    public void cargarImagen() {
+
     }
 
 }
