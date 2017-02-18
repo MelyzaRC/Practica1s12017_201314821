@@ -5,25 +5,19 @@
  */
 package practica1estructuras;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileWriter;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author MelyzaR
- */
 public class Principal extends javax.swing.JFrame {
 
-    Jugador primero = null;
-    Jugador ultimo = null;
+    Jugador primeroJugador = null;
+    Jugador ultimoJugador = null;
 
-    /**
-     * Creates new form Principal
-     */
     public Principal() {
         initComponents();
-        
     }
 
     /**
@@ -35,12 +29,12 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        jTabbedPane4 = new javax.swing.JTabbedPane();
-        jTabbedPane5 = new javax.swing.JTabbedPane();
-        jTabbedPane6 = new javax.swing.JTabbedPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        canvas1 = new java.awt.Canvas();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -48,11 +42,15 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.addTab("Fichas Activas", jTabbedPane3);
-        jTabbedPane1.addTab("Tablero", jTabbedPane4);
-        jTabbedPane1.addTab("Fichas", jTabbedPane5);
-        jTabbedPane1.addTab("Jugadores", jTabbedPane6);
-        jTabbedPane1.addTab("Diccionario", jTabbedPane2);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jButton1.setText("jButton1");
+
+        jButton3.setText("jButton3");
+
+        jLabel1.setText("jLabel1");
 
         jMenu1.setText("Opciones");
 
@@ -77,19 +75,36 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(970, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(278, 278, 278))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)))
+                .addContainerGap(766, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(88, 88, 88)
+                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(234, 234, 234))
         );
-
-        jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -113,21 +128,24 @@ public class Principal extends javax.swing.JFrame {
 
     //Metodos de jugador
     public void addJugador(Jugador actual) {
-        if (primero == null) {
-            primero = ultimo = actual;
+        if (primeroJugador == null) {
+            primeroJugador = ultimoJugador = actual;
+            JOptionPane.showMessageDialog(null, "El jugador " + actual.nombre.toUpperCase() + " ha sido registrado exitosamente.");
             System.out.println("Ingresado");
-        } else if (verificarRepetido(actual.nombre, primero, ultimo)) {
-            ultimo.siguiente = actual;
-            ultimo = actual;
-            ultimo.siguiente = null;
+        } else if (verificarRepetido(actual.nombre)) {
+            ultimoJugador.siguiente = actual;
+            ultimoJugador = actual;
+            ultimoJugador.siguiente = null;
+            JOptionPane.showMessageDialog(null, "El jugador " + actual.nombre.toUpperCase() + " ha sido registrado exitosamente.");
             System.out.println("Ingresado");
         } else {
+            JOptionPane.showMessageDialog(null, "El nombre " + actual.nombre.toUpperCase() + " ya ha sido registrado.");
             System.out.println("Repetido");
         }
     }
-    public boolean verificarRepetido(String nombre, Jugador primero, Jugador ultimo) {
+    public boolean verificarRepetido(String nombre) {
         int contadorRepetidos = 0;
-        Jugador bandera = primero;
+        Jugador bandera = primeroJugador;
         do {
             if (bandera.nombre.equals(nombre)) {
                 contadorRepetidos++;
@@ -135,7 +153,7 @@ public class Principal extends javax.swing.JFrame {
 
             bandera = bandera.siguiente;
 
-        } while (bandera != ultimo.siguiente);
+        } while (bandera != ultimoJugador.siguiente);
 
         if (contadorRepetidos == 0) {
             return true; // No hay repetidos
@@ -147,15 +165,15 @@ public class Principal extends javax.swing.JFrame {
         String textArchivo = "digraph imagenJugador{\n";
 
         Jugador bandera = new Jugador();
-        bandera = primero;
+        bandera = primeroJugador;
 
         do {
-            if (bandera == primero && bandera == ultimo) {
+            if (bandera == primeroJugador && bandera == ultimoJugador) {
                 textArchivo = textArchivo + bandera.nombre + ";";
-            } else if (bandera == primero) {
+            } else if (bandera == primeroJugador) {
                 textArchivo = textArchivo + bandera.nombre;
-            } else if (bandera == ultimo) {
-                textArchivo = textArchivo + "->" + bandera.nombre + "->"+ primero.nombre + ";\n";
+            } else if (bandera == ultimoJugador) {
+                textArchivo = textArchivo + "->" + bandera.nombre + "->"+ primeroJugador.nombre + ";\n";
             } else {
                 textArchivo = textArchivo + "->" + bandera.nombre + ";\n" + bandera.nombre;
             }
@@ -196,10 +214,13 @@ public class Principal extends javax.swing.JFrame {
         } finally {
         }
     }
-    public void cargarImagen() {
-
-    }
     //fin metodos de jugador
+    
+    
+    //Metodos de ficha
+    //Fin metodos de ficha
+    
+    
 
     /**
      * @param args the command line arguments
@@ -237,15 +258,15 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Canvas canvas1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTabbedPane jTabbedPane5;
-    private javax.swing.JTabbedPane jTabbedPane6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
