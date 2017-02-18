@@ -94,6 +94,8 @@ public class Principal extends javax.swing.JFrame {
     Ficha z = new Ficha("Z", 10);
     int contadorZ = 1;
     int contadorZZ = 0;
+    Ficha nula = new Ficha();
+    int contadorNulas = 0;
 
     public Principal() {
         initComponents();
@@ -158,36 +160,41 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(278, 278, 278))
             .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(605, 605, 605)
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(278, 278, 278))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)))
-                .addContainerGap(766, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(88, 88, 88)
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(234, 234, 234))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(88, 88, 88)
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(234, 234, 234))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(43, Short.MAX_VALUE))))
         );
 
         pack();
@@ -212,11 +219,11 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         llenarColaFichas();
-       
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- recorrerFichas();        // TODO add your handling code here:
+        recorrerFichas();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Metodos de jugador
@@ -316,8 +323,9 @@ public class Principal extends javax.swing.JFrame {
     public void llenarColaFichas() {
 
         for (int index = 1; index < 96; index++) {
-             valuarFicha(index);
+            valuarFicha(index);
         }
+        System.out.println("Nulas: " + contadorNulas);
     }
 
     public void valuarFicha(int index) {
@@ -328,7 +336,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(a, index);
                     contadorAA++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 2:
@@ -336,7 +344,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(b, index);
                     contadorBB++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 3:
@@ -344,7 +352,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(c, index);
                     contadorCC++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 4:
@@ -352,7 +360,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(d, index);
                     contadorDD++;
                 } else {
-                    valuarFicha(index);
+                   llenarNulas(index);
                 }
                 break;
             case 5:
@@ -360,7 +368,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(e, index);
                     contadorEE++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 6:
@@ -368,7 +376,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(f, index);
                     contadorFF++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 7:
@@ -376,7 +384,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(g, index);
                     contadorGG++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 8:
@@ -384,7 +392,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(h, index);
                     contadorHH++;
                 } else {
-                    valuarFicha(index);
+                   llenarNulas(index);
                 }
                 break;
             case 9:
@@ -392,7 +400,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(i, index);
                     contadorII++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 10:
@@ -400,7 +408,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(j, index);
                     contadorJJ++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 11:
@@ -408,7 +416,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(l, index);
                     contadorLL++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 12:
@@ -416,7 +424,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(m, index);
                     contadorMM++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 13:
@@ -424,7 +432,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(n, index);
                     contadorNN++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 14:
@@ -432,7 +440,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(n_, index);
                     contadorNN_++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 15:
@@ -440,7 +448,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(o, index);
                     contadorOO++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 16:
@@ -448,7 +456,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(p, index);
                     contadorPP++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 17:
@@ -456,7 +464,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(q, index);
                     contadorQQ++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 18:
@@ -464,7 +472,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(r, index);
                     contadorRR++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 19:
@@ -472,7 +480,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(s, index);
                     contadorSS++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 20:
@@ -480,7 +488,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(t, index);
                     contadorTT++;
                 } else {
-                    valuarFicha(index);
+                   llenarNulas(index);
                 }
                 break;
             case 21:
@@ -488,7 +496,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(u, index);
                     contadorUU++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 22:
@@ -496,7 +504,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(v, index);
                     contadorVV++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 23:
@@ -504,7 +512,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(x, index);
                     contadorXX++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 24:
@@ -512,7 +520,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(y, index);
                     contadorYY++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             case 25:
@@ -520,7 +528,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(z, index);
                     contadorZZ++;
                 } else {
-                    valuarFicha(index);
+                    llenarNulas(index);
                 }
                 break;
             default:
@@ -541,12 +549,91 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
+    public void llenarNulas(int index) {
+        if (contadorAA < contadorA) {
+            addFicha(a, index);
+            contadorAA++;
+        } else if (contadorBB < contadorB) {
+            addFicha(b, index);
+            contadorBB++;
+        } else if (contadorCC < contadorC) {
+            addFicha(c, index);
+            contadorCC++;
+        } else if (contadorDD < contadorD) {
+            addFicha(d, index);
+            contadorDD++;
+        } else if (contadorEE < contadorE) {
+            addFicha(e, index);
+            contadorEE++;
+        } else if (contadorFF < contadorF) {
+            addFicha(f, index);
+            contadorFF++;
+        } else if (contadorGG < contadorG) {
+            addFicha(g, index);
+            contadorGG++;
+        } else if (contadorHH < contadorH) {
+            addFicha(h, index);
+            contadorHH++;
+        }else if (contadorII < contadorI) {
+            addFicha(i, index);
+            contadorII++;
+        }else if (contadorJJ < contadorJ) {
+            addFicha(j, index);
+            contadorJJ++;
+        }else if (contadorLL < contadorL) {
+            addFicha(l, index);
+            contadorLL++;
+        }else if (contadorMM < contadorM) {
+            addFicha(m, index);
+            contadorMM++;
+        }else if (contadorNN < contadorN) {
+            addFicha(n, index);
+            contadorNN++;
+        }else if (contadorNN_ < contadorN_) {
+            addFicha(n_, index);
+            contadorNN_++;
+        }else if (contadorOO < contadorO) {
+            addFicha(o, index);
+            contadorOO++;
+       }else if (contadorPP < contadorP) {
+            addFicha(p, index);
+            contadorPP++;
+        }else if (contadorQQ < contadorQ) {
+            addFicha(q, index);
+            contadorQQ++;
+        }else if (contadorRR < contadorR) {
+            addFicha(r, index);
+            contadorRR++;
+        }else if (contadorSS < contadorS) {
+            addFicha(s, index);
+            contadorSS++;
+        }else if (contadorTT < contadorT) {
+            addFicha(t, index);
+            contadorTT++;
+        }else if (contadorUU < contadorU) {
+            addFicha(u, index);
+            contadorUU++;
+        }else if (contadorVV < contadorV) {
+            addFicha(v, index);
+            contadorVV++;
+        }else if (contadorXX < contadorX) {
+            addFicha(x, index);
+            contadorXX++;
+        }else if (contadorYY < contadorY) {
+            addFicha(y, index);
+            contadorYY++;
+        }else if (contadorZZ < contadorZ) {
+            addFicha(z, index);
+            contadorZZ++;
+        }
+    }
+
     public void recorrerFichas() {
 
         Ficha bandera = primeraFicha;
         do {
 
-            System.out.println("Letra: " + bandera.letra + " Puntos que da: " + bandera.puntos);
+            jTextArea1.setText(jTextArea1.getText() + "Letra: " + bandera.letra + " Puntos que da: " + bandera.puntos + "\n");
             bandera = bandera.siguiente;
 
         } while (bandera != null);
