@@ -12,20 +12,17 @@ public class Ficha {
     public String letra;
     public int puntos;
     public Ficha siguiente;
-    public Ficha anterior;
     
     public Ficha(){
     letra = null;
     puntos = 0;
     siguiente = null;
-    anterior = null;
     }
  
     public Ficha(String l, int p){
     letra = l;
     puntos = p;
     siguiente = null;
-    anterior = null;
     }
     
 }

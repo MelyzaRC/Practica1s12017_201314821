@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package practica1estructuras;
 
 import java.awt.Image;
@@ -12,6 +7,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
+
+    Palabra primeraPalabra = null;
+    Palabra ultimaPalabra = null;
 
     Jugador primeroJugador = null;
     Jugador ultimoJugador = null;
@@ -94,8 +92,6 @@ public class Principal extends javax.swing.JFrame {
     Ficha z = new Ficha("Z", 10);
     int contadorZ = 1;
     int contadorZZ = 0;
-    Ficha nula = new Ficha();
-    int contadorNulas = 0;
 
     public Principal() {
         initComponents();
@@ -111,6 +107,8 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -138,6 +136,15 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
+        jTextField1.setText("jTextField1");
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Opciones");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
@@ -163,20 +170,28 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(605, 605, 605)
-                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(278, 278, 278))
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(605, 605, 605)
+                                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(278, 278, 278))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel1)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,6 +202,10 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jLabel1))
+                        .addGap(31, 31, 31)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(88, 88, 88)
@@ -205,7 +224,7 @@ public class Principal extends javax.swing.JFrame {
         if (nombre == null) {
             System.out.println("No ingresado");
         } else {
-            Jugador nuevo = new Jugador(nombre, null);
+            Jugador nuevo = new Jugador(nombre);
             addJugador(nuevo);
             try {
                 generarArchivoImagen();
@@ -219,12 +238,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         llenarColaFichas();
-
+        recorrerFichas();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        recorrerFichas();        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     //Metodos de jugador
     public void addJugador(Jugador actual) {
@@ -280,7 +303,7 @@ public class Principal extends javax.swing.JFrame {
                 textArchivo = textArchivo + "->" + bandera.nombre + ";\n" + bandera.nombre;
             }
             bandera = bandera.siguiente;
-        } while (bandera != null);
+        } while (bandera != ultimoJugador.siguiente);
         textArchivo = textArchivo + "}";
 
         try {
@@ -322,10 +345,9 @@ public class Principal extends javax.swing.JFrame {
     //Metodos de ficha
     public void llenarColaFichas() {
 
-        for (int index = 1; index < 96; index++) {
+        for (int index = 1; index < 8; index++) {
             valuarFicha(index);
         }
-        System.out.println("Nulas: " + contadorNulas);
     }
 
     public void valuarFicha(int index) {
@@ -360,7 +382,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(d, index);
                     contadorDD++;
                 } else {
-                   llenarNulas(index);
+                    llenarNulas(index);
                 }
                 break;
             case 5:
@@ -392,7 +414,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(h, index);
                     contadorHH++;
                 } else {
-                   llenarNulas(index);
+                    llenarNulas(index);
                 }
                 break;
             case 9:
@@ -488,7 +510,7 @@ public class Principal extends javax.swing.JFrame {
                     addFicha(t, index);
                     contadorTT++;
                 } else {
-                   llenarNulas(index);
+                    llenarNulas(index);
                 }
                 break;
             case 21:
@@ -524,28 +546,26 @@ public class Principal extends javax.swing.JFrame {
                 }
                 break;
             case 25:
-                if (contadorZZ < contadorZZ) {
+                if (contadorZZ < contadorZ) {
                     addFicha(z, index);
                     contadorZZ++;
                 } else {
                     llenarNulas(index);
                 }
                 break;
-            default:
-                break;
         }
     }
 
-    public void addFicha(Ficha actual, int i) {
+    public void addFicha(Ficha actual, int index) {
         if (primeraFicha == null) {
-            primeraFicha = ultimaFicha = actual;
-            System.out.println(i + " - Ingresada Ficha: " + actual.letra);
+            primeraFicha = actual;
+            ultimaFicha = actual;
+            System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         } else {
             ultimaFicha.siguiente = actual;
-            ultimaFicha = actual;
+            ultimaFicha = ultimaFicha.siguiente;
             ultimaFicha.siguiente = null;
-            System.out.println(i + " - Ingresada Ficha: " + actual.letra);
-
+            System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         }
     }
 
@@ -574,72 +594,121 @@ public class Principal extends javax.swing.JFrame {
         } else if (contadorHH < contadorH) {
             addFicha(h, index);
             contadorHH++;
-        }else if (contadorII < contadorI) {
+        } else if (contadorII < contadorI) {
             addFicha(i, index);
             contadorII++;
-        }else if (contadorJJ < contadorJ) {
+        } else if (contadorJJ < contadorJ) {
             addFicha(j, index);
             contadorJJ++;
-        }else if (contadorLL < contadorL) {
+        } else if (contadorLL < contadorL) {
             addFicha(l, index);
             contadorLL++;
-        }else if (contadorMM < contadorM) {
+        } else if (contadorMM < contadorM) {
             addFicha(m, index);
             contadorMM++;
-        }else if (contadorNN < contadorN) {
+        } else if (contadorNN < contadorN) {
             addFicha(n, index);
             contadorNN++;
-        }else if (contadorNN_ < contadorN_) {
+        } else if (contadorNN_ < contadorN_) {
             addFicha(n_, index);
             contadorNN_++;
-        }else if (contadorOO < contadorO) {
+        } else if (contadorOO < contadorO) {
             addFicha(o, index);
             contadorOO++;
-       }else if (contadorPP < contadorP) {
+        } else if (contadorPP < contadorP) {
             addFicha(p, index);
             contadorPP++;
-        }else if (contadorQQ < contadorQ) {
+        } else if (contadorQQ < contadorQ) {
             addFicha(q, index);
             contadorQQ++;
-        }else if (contadorRR < contadorR) {
+        } else if (contadorRR < contadorR) {
             addFicha(r, index);
             contadorRR++;
-        }else if (contadorSS < contadorS) {
+        } else if (contadorSS < contadorS) {
             addFicha(s, index);
             contadorSS++;
-        }else if (contadorTT < contadorT) {
+        } else if (contadorTT < contadorT) {
             addFicha(t, index);
             contadorTT++;
-        }else if (contadorUU < contadorU) {
+        } else if (contadorUU < contadorU) {
             addFicha(u, index);
             contadorUU++;
-        }else if (contadorVV < contadorV) {
+        } else if (contadorVV < contadorV) {
             addFicha(v, index);
             contadorVV++;
-        }else if (contadorXX < contadorX) {
+        } else if (contadorXX < contadorX) {
             addFicha(x, index);
             contadorXX++;
-        }else if (contadorYY < contadorY) {
+        } else if (contadorYY < contadorY) {
             addFicha(y, index);
             contadorYY++;
-        }else if (contadorZZ < contadorZ) {
+        } else if (contadorZZ < contadorZ) {
             addFicha(z, index);
             contadorZZ++;
         }
     }
 
     public void recorrerFichas() {
-
+        int at = 1;
         Ficha bandera = primeraFicha;
-        do {
-
-            jTextArea1.setText(jTextArea1.getText() + "Letra: " + bandera.letra + " Puntos que da: " + bandera.puntos + "\n");
+        while (bandera.siguiente != null) {
+            jTextArea1.setText(jTextArea1.getText() + at + "  - Letra: " + bandera.letra + " Puntos que da: " + bandera.puntos + "  Siguiente: " + bandera.siguiente.letra + "\n");
+            at++;
             bandera = bandera.siguiente;
-
-        } while (bandera != null);
+        }
+        System.out.println("Hay: " + at);
     }
     //Fin metodos de ficha
 
+    //Metodos de palabra
+    public void addPalabra(Palabra nuevaPalabra) {
+        if (primeraPalabra == null) {
+            primeraPalabra = ultimaPalabra = nuevaPalabra;
+        } else if (verificarPalabra(nuevaPalabra.palabra)) {
+            ultimaPalabra.siguiente = nuevaPalabra;
+            ultimaPalabra = nuevaPalabra;
+            ultimaPalabra.siguiente = null;
+        } else {
+            System.out.println("Palabra Repetida");
+            //Ya no ingresarla porque ya está
+        }
+    }
+
+    public boolean verificarPalabra(String s) {
+        int contadorRepetidos = 0;
+        Palabra bandera = primeraPalabra;
+        do {
+            if (bandera.palabra.equals(s)) {
+                contadorRepetidos++;
+            }
+            bandera = bandera.siguiente;
+        } while (bandera != ultimaPalabra.siguiente);
+
+        if (contadorRepetidos == 0) {
+            return true; // No hay repetidos
+        } else {
+            return false; // Si hay repetidos
+        }
+    }
+
+    public boolean buscarPalabra(String p) {
+        Palabra bandera = new Palabra();
+        bandera = primeraPalabra;
+        int contador = 0;
+
+        while (bandera != null) {
+            if (p.equals(bandera.palabra)) {
+                contador++;
+            }
+        }
+
+        if (contador == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //Fin metodos de palabra 
     /**
      * @param args the command line arguments
      */
@@ -678,6 +747,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
@@ -686,5 +756,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,18 +8,15 @@ package practica1estructuras;
 public class Jugador {
 
     public String nombre;
-    public Ficha fichas;
     public Jugador siguiente;
 
     public Jugador() {
         nombre = null;
-        fichas = null;
         siguiente = null;
     }
 
-    public Jugador(String name, Ficha f) {
+    public Jugador(String name) {
         nombre = name;
-        fichas = f;
         siguiente = null;
     }
     
