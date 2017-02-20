@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
 
+    public int dimension = 0;
+    
     Posicion primeraPosicion = null;
     Posicion ultimaPosicion = null;
 

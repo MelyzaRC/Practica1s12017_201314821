@@ -98,6 +98,7 @@ Principal palabraPrincipal = new Principal();
                 Node a = nodo.item(i);
                 Element e = (Element) a;
                 System.out.println("Dimension: " + e.getTextContent());
+                palabraPrincipal.dimension= Integer.parseInt(e.getTextContent());
             }
 
             //Lee las palabras del diccionario
