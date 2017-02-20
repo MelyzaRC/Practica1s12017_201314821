@@ -20,10 +20,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class MainForm extends javax.swing.JFrame {
-
+Principal palabraPrincipal = new Principal();
     public MainForm() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -47,6 +49,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\Recursos\\play.png")); // NOI18N
         jButton2.setText("Jugar");
         jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,6 +110,8 @@ public class MainForm extends javax.swing.JFrame {
                 Node p = listadoPalabra.item(i);
                 Element e = (Element) p;
                 System.out.println("Palabra: " + e.getTextContent());
+                Palabra temp = new Palabra(e.getTextContent());
+                palabraPrincipal.addPalabra(temp);
             }
 
             //Lee los dobles 
@@ -150,10 +159,16 @@ public class MainForm extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "El archivo ha sido analizado, presione 'JUGAR' \n para iniciar el juego", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
             jButton2.setEnabled(true);
+            
+            
         } catch (ParserConfigurationException | SAXException | IOException e) {
             System.out.println("Error");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        palabraPrincipal.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

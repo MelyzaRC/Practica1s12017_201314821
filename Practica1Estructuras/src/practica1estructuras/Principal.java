@@ -10,7 +10,6 @@ public class Principal extends javax.swing.JFrame {
 
     Posicion primeraPosicion= null;
     Posicion ultimaPosicion = null;
-    
     Palabra primeraPalabra = null;
     Palabra ultimaPalabra = null;
 
@@ -208,11 +207,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      crearTablero(5);
+recorrerPalabras();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-recorrerFila();        // TODO add your handling code here:
+      // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     //Metodos de jugador
@@ -221,16 +220,21 @@ recorrerFila();        // TODO add your handling code here:
             primeroJugador = ultimoJugador = actual;
             JOptionPane.showMessageDialog(null, "El jugador " + actual.nombre.toUpperCase() + " ha sido registrado exitosamente.");
             System.out.println("Ingresado");
+            generarArchivoImagen();
+        generarImagen();
         } else if (verificarRepetido(actual.nombre)) {
             ultimoJugador.siguiente = actual;
             ultimoJugador = actual;
             ultimoJugador.siguiente = primeroJugador;
             JOptionPane.showMessageDialog(null, "El jugador " + actual.nombre.toUpperCase() + " ha sido registrado exitosamente.");
             System.out.println("Ingresado");
+            generarArchivoImagen();
+        generarImagen();
         } else {
             JOptionPane.showMessageDialog(null, "El nombre " + actual.nombre.toUpperCase() + " ya ha sido registrado.");
             System.out.println("Repetido");
         }
+        
     }
 
     public boolean verificarRepetido(String nombre) {
@@ -634,6 +638,7 @@ recorrerFila();        // TODO add your handling code here:
             ultimaPalabra.siguiente = nuevaPalabra;
             ultimaPalabra = nuevaPalabra;
             ultimaPalabra.siguiente = null;
+            System.out.println("Agregada: " + nuevaPalabra.palabra);
         } else {
             System.out.println("Palabra Repetida");
             //Ya no ingresarla porque ya está
@@ -674,6 +679,15 @@ recorrerFila();        // TODO add your handling code here:
             return false;
         }
     }
+    
+    public void recorrerPalabras(){
+    Palabra bandera = new Palabra();
+    bandera = primeraPalabra;
+        while(bandera != null){
+            System.out.println("Palabra: " + bandera.palabra);
+            bandera = bandera.siguiente;
+    }
+    }
     //Fin metodos de palabra 
 
     //Creacion de tablero
@@ -695,7 +709,7 @@ Posicion bandera = new Posicion();
 bandera = primeraPosicion;
 
 while(bandera != null){
-    System.out.println("posicion: " + bandera.columna + " su derecha es: " + bandera.derecha.columna);
+    System.out.println("posicion: " + bandera.columna);
     bandera = bandera.derecha;
 }
 }
