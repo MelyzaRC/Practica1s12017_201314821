@@ -64,6 +64,7 @@
           <Image iconType="2" name="C:\Users\MelyzaR\Documents\GitHub\Practica1s12017_201314821\Practica1Estructuras\Recursos\play.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Jugar"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>
