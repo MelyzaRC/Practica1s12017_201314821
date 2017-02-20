@@ -7,19 +7,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
-
-    Posicion primeraPosicion= null;
+    
+    Posicion primeraPosicion = null;
     Posicion ultimaPosicion = null;
     
     public Palabra primeraPalabra = null;
     public Palabra ultimaPalabra = null;
-
+    
     public Jugador primeroJugador = null;
     public Jugador ultimoJugador = null;
-
+    public Jugador jugadorActual = new Jugador();
+    
     Ficha primeraFicha = null;
     Ficha ultimaFicha = null;
-
+    
     Ficha a = new Ficha("A", 1);
     int contadorA = 12;
     int contadorAA = 0;
@@ -95,12 +96,12 @@ public class Principal extends javax.swing.JFrame {
     Ficha z = new Ficha("Z", 10);
     int contadorZ = 1;
     int contadorZZ = 0;
-
+    
     public Principal() {
         initComponents();
         setLocationRelativeTo(null);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -140,6 +141,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -151,7 +153,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 0, 51));
-        jLabel3.setText("JUGADOR");
+        jLabel3.setText("---------------------");
 
         jTabbedPane1.addTab("Diccionario", jLabel1);
         jTabbedPane1.addTab("Fichas Activas", jLabel4);
@@ -170,6 +172,11 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton3.setText("Ingresar nueva palabra");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Opciones del Diccionario");
 
@@ -299,6 +306,13 @@ public class Principal extends javax.swing.JFrame {
         jButton6.setForeground(new java.awt.Color(0, 0, 204));
         jButton6.setText("Cancelar");
 
+        jButton1.setText("Pasar de turno");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Opciones");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
@@ -324,7 +338,9 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(779, 779, 779)
+                        .addGap(603, 603, 603)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,8 +404,10 @@ public class Principal extends javax.swing.JFrame {
                                 .addGap(25, 25, 25)
                                 .addComponent(jLabel2)
                                 .addGap(6, 6, 6)
-                                .addComponent(jLabel3)
-                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jButton1))
+                                .addGap(3, 3, 3)
                                 .addComponent(jLabel8)
                                 .addGap(11, 11, 11)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -449,29 +467,57 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+            jugadorActual = jugadorActual.siguiente;
+            indicarTurno();
+        
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
+        if (nombre == null) {
+            System.out.println("No ingresado");
+        } else {
+            Palabra nueva = new Palabra(nombre.toLowerCase());
+            addPalabra(nueva);
+            JOptionPane.showMessageDialog(this, "Palabra ingresada con éxito", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
+        
+            try {
+                generarArchivoPalabras();
+                generarImagenPalabras();
+            } catch (Exception ex) {
+                System.out.println("Scrabble dice: " + ex.getMessage());
+            }}        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     //Metodos de jugador
     public void addJugador(Jugador actual) {
         if (primeroJugador == null) {
             primeroJugador = ultimoJugador = actual;
             JOptionPane.showMessageDialog(null, "El jugador " + actual.nombre.toUpperCase() + " ha sido registrado exitosamente.");
             System.out.println("Ingresado");
+            jugadorActual = primeroJugador;
+            indicarTurno();
             generarArchivoImagen();
-        generarImagen();
+            generarImagen();
         } else if (verificarRepetido(actual.nombre)) {
             ultimoJugador.siguiente = actual;
             ultimoJugador = actual;
             ultimoJugador.siguiente = primeroJugador;
             JOptionPane.showMessageDialog(null, "El jugador " + actual.nombre.toUpperCase() + " ha sido registrado exitosamente.");
+            indicarTurno();
             System.out.println("Ingresado");
             generarArchivoImagen();
-        generarImagen();
+            generarImagen();
         } else {
             JOptionPane.showMessageDialog(null, "El nombre " + actual.nombre.toUpperCase() + " ya ha sido registrado.");
             System.out.println("Repetido");
         }
         
     }
-
+    
     public boolean verificarRepetido(String nombre) {
         int contadorRepetidos = 0;
         Jugador bandera = primeroJugador;
@@ -479,24 +525,24 @@ public class Principal extends javax.swing.JFrame {
             if (bandera.nombre.equals(nombre)) {
                 contadorRepetidos++;
             }
-
+            
             bandera = bandera.siguiente;
-
+            
         } while (bandera != ultimoJugador.siguiente);
-
+        
         if (contadorRepetidos == 0) {
             return true; // No hay repetidos
         } else {
             return false; // Si hay repetidos
         }
     }
-
+    
     public void generarArchivoImagen() {
         String textArchivo = "digraph imagenJugador{\n";
-
+        
         Jugador bandera = new Jugador();
         bandera = primeroJugador;
-
+        
         do {
             if (bandera == primeroJugador && bandera == ultimoJugador) {
                 textArchivo = textArchivo + bandera.nombre + ";";
@@ -510,7 +556,7 @@ public class Principal extends javax.swing.JFrame {
             bandera = bandera.siguiente;
         } while (bandera != ultimoJugador.siguiente);
         textArchivo = textArchivo + "}";
-
+        
         try {
             File archivo = new File("C:\\release\\Estructuras\\archivoJugador.txt");
             if (archivo.exists()) {
@@ -522,9 +568,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
         }
-
+        
     }
-
+    
     public void generarImagen() {
         try {
             String dotPath = "C:\\release\\bin\\dot.exe";
@@ -546,16 +592,34 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     
-    //fin metodos de jugador
+    public void indicarTurno() {
+        jTextArea1.setText("");
+       
+        jLabel3.setText(jugadorActual.nombre);
+        
+        Jugador bn = new Jugador();
+        bn = primeroJugador;
+        
+        while (bn != null) {
+            if (bn == ultimoJugador) {
+                jTextArea1.setText(jTextArea1.getText() + bn.nombre + ":  " + bn.punteo + "  Puntos\n");
+                break;
+            } else {
+                jTextArea1.setText(jTextArea1.getText() + bn.nombre + ":  " + bn.punteo + "  Puntos\n");
+                bn = bn.siguiente;
+            }
+        }
+    }
 
+    //fin metodos de jugador
     //Metodos de ficha
     public void llenarColaFichas() {
-
+        
         for (int index = 1; index < 8; index++) {
             valuarFicha(index);
         }
     }
-
+    
     public void valuarFicha(int index) {
         int numero = (int) (Math.random() * 25) + 1;
         switch (numero) {
@@ -761,7 +825,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
         }
     }
-
+    
     public void addFicha(Ficha actual, int index) {
         if (primeraFicha == null) {
             primeraFicha = actual;
@@ -774,7 +838,7 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         }
     }
-
+    
     public void llenarNulas(int index) {
         if (contadorAA < contadorA) {
             addFicha(a, index);
@@ -853,7 +917,7 @@ public class Principal extends javax.swing.JFrame {
             contadorZZ++;
         }
     }
-
+    
     public void recorrerFichas() {
         int at = 1;
         Ficha bandera = primeraFicha;
@@ -867,7 +931,7 @@ public class Principal extends javax.swing.JFrame {
     //Fin metodos de ficha
 
     //Metodos de palabra
-   public void addPalabra(Palabra nuevaPalabra) {
+    public void addPalabra(Palabra nuevaPalabra) {
         if (primeraPalabra == null) {
             primeraPalabra = ultimaPalabra = nuevaPalabra;
         } else if (verificarPalabra(nuevaPalabra.palabra)) {
@@ -880,7 +944,7 @@ public class Principal extends javax.swing.JFrame {
             //Ya no ingresarla porque ya está
         }
     }
-
+    
     public boolean verificarPalabra(String s) {
         int contadorRepetidos = 0;
         Palabra bandera = primeraPalabra;
@@ -890,25 +954,25 @@ public class Principal extends javax.swing.JFrame {
             }
             bandera = bandera.siguiente;
         } while (bandera != ultimaPalabra.siguiente);
-
+        
         if (contadorRepetidos == 0) {
             return true; // No hay repetidos
         } else {
             return false; // Si hay repetidos
         }
     }
-
+    
     public boolean buscarPalabra(String p) {
         Palabra bandera = new Palabra();
         bandera = primeraPalabra;
         int contador = 0;
-
+        
         while (bandera != null) {
             if (p.equals(bandera.palabra)) {
                 contador++;
             }
         }
-
+        
         if (contador == 0) {
             return true;
         } else {
@@ -916,24 +980,24 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     
-    public void recorrerPalabras(){
-    Palabra bandera = new Palabra();
-    bandera = primeraPalabra;
-        while(bandera != null){
-            System.out.println("Palabra: " + bandera.palabra);
-            bandera = bandera.siguiente;
-    }
-    }
-    
-    public void generarArchivoPalabras(){
-    String textArchivo = "digraph imagenPalabras{\n";
-
+    public void recorrerPalabras() {
         Palabra bandera = new Palabra();
         bandera = primeraPalabra;
-
+        while (bandera != null) {
+            System.out.println("Palabra: " + bandera.palabra);
+            bandera = bandera.siguiente;
+        }
+    }
+    
+    public void generarArchivoPalabras() {
+        String textArchivo = "digraph imagenPalabras{\n";
+        
+        Palabra bandera = new Palabra();
+        bandera = primeraPalabra;
+        
         do {
             if (bandera == primeraPalabra && bandera == ultimaPalabra) {
-                textArchivo = textArchivo + bandera.palabra+ ";";
+                textArchivo = textArchivo + bandera.palabra + ";";
             } else if (bandera == primeraPalabra) {
                 textArchivo = textArchivo + bandera.palabra;
             } else if (bandera == ultimaPalabra) {
@@ -944,7 +1008,7 @@ public class Principal extends javax.swing.JFrame {
             bandera = bandera.siguiente;
         } while (bandera != null);
         textArchivo = textArchivo + "}";
-
+        
         try {
             File archivo = new File("C:\\release\\Estructuras\\archivoPalabras.txt");
             if (archivo.exists()) {
@@ -958,8 +1022,8 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     
-    public void generarImagenPalabras(){
-    try {
+    public void generarImagenPalabras() {
+        try {
             String dotPath = "C:\\release\\bin\\dot.exe";
             String fileInputPath = "C:\\release\\Estructuras\\archivoPalabras.txt";
             String fileOutputPath = "C:\\release\\Estructuras\\imagenPalabras.png";
@@ -984,28 +1048,31 @@ public class Principal extends javax.swing.JFrame {
     public void crearTablero(int dimension) {
         for (int i = 0; i < dimension; i++) {
             Posicion temp = new Posicion(i, 1, 0, null);
-            if(primeraPosicion == null){
-            primeraPosicion = temp;
-            ultimaPosicion = temp;
-            }else{
-            ultimaPosicion.derecha = temp;
-            ultimaPosicion = temp;
-            ultimaPosicion.derecha = null;
+            if (primeraPosicion == null) {
+                primeraPosicion = temp;
+                ultimaPosicion = temp;
+            } else {
+                ultimaPosicion.derecha = temp;
+                ultimaPosicion = temp;
+                ultimaPosicion.derecha = null;
             }
         }
     }
-public void recorrerFila(){
-Posicion bandera = new Posicion();
-bandera = primeraPosicion;
-
-while(bandera != null){
-    System.out.println("posicion: " + bandera.columna);
-    bandera = bandera.derecha;
-}
-}
-    public void addPosicion(Posicion p){
     
+    public void recorrerFila() {
+        Posicion bandera = new Posicion();
+        bandera = primeraPosicion;
+        
+        while (bandera != null) {
+            System.out.println("posicion: " + bandera.columna);
+            bandera = bandera.derecha;
+        }
     }
+    
+    public void addPosicion(Posicion p) {
+        
+    }
+
     //Fin creacion de tablero
     /**
      * @param args the command line arguments
@@ -1044,6 +1111,7 @@ while(bandera != null){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
