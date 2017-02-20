@@ -7,20 +7,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
-    
+
     Posicion primeraPosicion = null;
     Posicion ultimaPosicion = null;
-    
+
     public Palabra primeraPalabra = null;
     public Palabra ultimaPalabra = null;
-    
+
     public Jugador primeroJugador = null;
     public Jugador ultimoJugador = null;
     public Jugador jugadorActual = new Jugador();
-    
+
     Ficha primeraFicha = null;
     Ficha ultimaFicha = null;
-    
+
     Ficha a = new Ficha("A", 1);
     int contadorA = 12;
     int contadorAA = 0;
@@ -96,12 +96,12 @@ public class Principal extends javax.swing.JFrame {
     Ficha z = new Ficha("Z", 10);
     int contadorZ = 1;
     int contadorZZ = 0;
-    
+
     public Principal() {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -450,7 +450,7 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         String nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre");
         if (nombre == null) {
@@ -468,28 +468,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-            jugadorActual = jugadorActual.siguiente;
-            indicarTurno();
-        
-
+        jugadorActual = jugadorActual.siguiente;
+        indicarTurno();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
+        String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
         if (nombre == null) {
             System.out.println("No ingresado");
         } else {
             Palabra nueva = new Palabra(nombre.toLowerCase());
             addPalabra(nueva);
             JOptionPane.showMessageDialog(this, "Palabra ingresada con éxito", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
-        
+
             try {
                 generarArchivoPalabras();
                 generarImagenPalabras();
             } catch (Exception ex) {
                 System.out.println("Scrabble dice: " + ex.getMessage());
-            }}        // TODO add your handling code here:
+            }
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     //Metodos de jugador
@@ -515,9 +513,9 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             JOptionPane.showMessageDialog(null, "El nombre " + actual.nombre.toUpperCase() + " ya ha sido registrado.");
             System.out.println("Repetido");
         }
-        
+
     }
-    
+
     public boolean verificarRepetido(String nombre) {
         int contadorRepetidos = 0;
         Jugador bandera = primeroJugador;
@@ -525,24 +523,24 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             if (bandera.nombre.equals(nombre)) {
                 contadorRepetidos++;
             }
-            
+
             bandera = bandera.siguiente;
-            
+
         } while (bandera != ultimoJugador.siguiente);
-        
+
         if (contadorRepetidos == 0) {
             return true; // No hay repetidos
         } else {
             return false; // Si hay repetidos
         }
     }
-    
+
     public void generarArchivoImagen() {
         String textArchivo = "digraph imagenJugador{\n";
-        
+
         Jugador bandera = new Jugador();
         bandera = primeroJugador;
-        
+
         do {
             if (bandera == primeroJugador && bandera == ultimoJugador) {
                 textArchivo = textArchivo + bandera.nombre + ";";
@@ -556,7 +554,7 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             bandera = bandera.siguiente;
         } while (bandera != ultimoJugador.siguiente);
         textArchivo = textArchivo + "}";
-        
+
         try {
             File archivo = new File("C:\\release\\Estructuras\\archivoJugador.txt");
             if (archivo.exists()) {
@@ -568,9 +566,9 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
         }
-        
+
     }
-    
+
     public void generarImagen() {
         try {
             String dotPath = "C:\\release\\bin\\dot.exe";
@@ -591,15 +589,15 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
         } finally {
         }
     }
-    
+
     public void indicarTurno() {
         jTextArea1.setText("");
-       
+
         jLabel3.setText(jugadorActual.nombre);
-        
+
         Jugador bn = new Jugador();
         bn = primeroJugador;
-        
+
         while (bn != null) {
             if (bn == ultimoJugador) {
                 jTextArea1.setText(jTextArea1.getText() + bn.nombre + ":  " + bn.punteo + "  Puntos\n");
@@ -614,12 +612,12 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
     //fin metodos de jugador
     //Metodos de ficha
     public void llenarColaFichas() {
-        
+
         for (int index = 1; index < 8; index++) {
             valuarFicha(index);
         }
     }
-    
+
     public void valuarFicha(int index) {
         int numero = (int) (Math.random() * 25) + 1;
         switch (numero) {
@@ -825,7 +823,7 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
                 break;
         }
     }
-    
+
     public void addFicha(Ficha actual, int index) {
         if (primeraFicha == null) {
             primeraFicha = actual;
@@ -838,7 +836,7 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         }
     }
-    
+
     public void llenarNulas(int index) {
         if (contadorAA < contadorA) {
             addFicha(a, index);
@@ -917,7 +915,7 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             contadorZZ++;
         }
     }
-    
+
     public void recorrerFichas() {
         int at = 1;
         Ficha bandera = primeraFicha;
@@ -944,7 +942,7 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             //Ya no ingresarla porque ya está
         }
     }
-    
+
     public boolean verificarPalabra(String s) {
         int contadorRepetidos = 0;
         Palabra bandera = primeraPalabra;
@@ -954,32 +952,32 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             }
             bandera = bandera.siguiente;
         } while (bandera != ultimaPalabra.siguiente);
-        
+
         if (contadorRepetidos == 0) {
             return true; // No hay repetidos
         } else {
             return false; // Si hay repetidos
         }
     }
-    
+
     public boolean buscarPalabra(String p) {
         Palabra bandera = new Palabra();
         bandera = primeraPalabra;
         int contador = 0;
-        
+
         while (bandera != null) {
             if (p.equals(bandera.palabra)) {
                 contador++;
             }
         }
-        
+
         if (contador == 0) {
             return true;
         } else {
             return false;
         }
     }
-    
+
     public void recorrerPalabras() {
         Palabra bandera = new Palabra();
         bandera = primeraPalabra;
@@ -988,13 +986,13 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             bandera = bandera.siguiente;
         }
     }
-    
+
     public void generarArchivoPalabras() {
         String textArchivo = "digraph imagenPalabras{\n";
-        
+
         Palabra bandera = new Palabra();
         bandera = primeraPalabra;
-        
+
         do {
             if (bandera == primeraPalabra && bandera == ultimaPalabra) {
                 textArchivo = textArchivo + bandera.palabra + ";";
@@ -1008,7 +1006,7 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             bandera = bandera.siguiente;
         } while (bandera != null);
         textArchivo = textArchivo + "}";
-        
+
         try {
             File archivo = new File("C:\\release\\Estructuras\\archivoPalabras.txt");
             if (archivo.exists()) {
@@ -1021,7 +1019,7 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
         }
     }
-    
+
     public void generarImagenPalabras() {
         try {
             String dotPath = "C:\\release\\bin\\dot.exe";
@@ -1058,22 +1056,25 @@ String nombre = JOptionPane.showInputDialog(null, "Ingrese una nueva palabra");
             }
         }
     }
-    
+
     public void recorrerFila() {
         Posicion bandera = new Posicion();
         bandera = primeraPosicion;
-        
+
         while (bandera != null) {
             System.out.println("posicion: " + bandera.columna);
             bandera = bandera.derecha;
         }
     }
-    
+
     public void addPosicion(Posicion p) {
-        
+
     }
 
     //Fin creacion de tablero
+    
+    
+    
     /**
      * @param args the command line arguments
      */
