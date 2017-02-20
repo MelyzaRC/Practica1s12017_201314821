@@ -20,4 +20,8 @@ palabra = p;
 siguiente = null;
 }
 
+
+
+
+ 
 }

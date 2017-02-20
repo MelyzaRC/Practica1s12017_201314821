@@ -10,8 +10,8 @@ public class Principal extends javax.swing.JFrame {
 
     Posicion primeraPosicion= null;
     Posicion ultimaPosicion = null;
-    Palabra primeraPalabra = null;
-    Palabra ultimaPalabra = null;
+    public Palabra primeraPalabra = null;
+    public Palabra ultimaPalabra = null;
 
     public Jugador primeroJugador = null;
     Jugador ultimoJugador = null;
@@ -631,7 +631,7 @@ recorrerPalabras();
     //Fin metodos de ficha
 
     //Metodos de palabra
-    public void addPalabra(Palabra nuevaPalabra) {
+   public void addPalabra(Palabra nuevaPalabra) {
         if (primeraPalabra == null) {
             primeraPalabra = ultimaPalabra = nuevaPalabra;
         } else if (verificarPalabra(nuevaPalabra.palabra)) {
