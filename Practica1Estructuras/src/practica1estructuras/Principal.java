@@ -557,10 +557,11 @@ public class Principal extends javax.swing.JFrame {
             Palabra nueva = new Palabra(nombre.toLowerCase());
             addPalabra(nueva);
             JOptionPane.showMessageDialog(this, "Palabra ingresada con éxito", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
-
+           
             try {
                 generarArchivoPalabras();
                 generarImagenPalabras();
+                cargarImagenPantallaPalabras();
             } catch (Exception ex) {
                 System.out.println("Scrabble dice: " + ex.getMessage());
             }
@@ -739,7 +740,8 @@ public class Principal extends javax.swing.JFrame {
             jugarOK = true;
             indicarTurno();
             generarArchivoImagen();
-            generarImagen();
+            cargarImagenPantalla();
+
         } else if (verificarRepetido(actual.nombre)) {
             ultimoJugador.siguiente = actual;
             ultimoJugador = actual;
@@ -749,6 +751,7 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("Ingresado");
             generarArchivoImagen();
             generarImagen();
+            cargarImagenPantalla();
         } else {
             JOptionPane.showMessageDialog(null, "El nombre " + actual.nombre.toUpperCase() + " ya ha sido registrado.");
             System.out.println("Repetido");
@@ -813,7 +816,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             String dotPath = "C:\\release\\bin\\dot.exe";
             String fileInputPath = "C:\\release\\Estructuras\\archivoJugador.txt";
-            String fileOutputPath = "C:\\release\\Estructuras\\imagenJugador.png";
+            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenJugador.png";
             String tParam = "-Tjpg";
             String tOParam = "-o";
             String[] cmd = new String[5];
@@ -936,6 +939,17 @@ public class Principal extends javax.swing.JFrame {
                 bandera = bandera.siguiente;
             }
 
+        }
+    }
+
+    public void cargarImagenPantalla() {
+        try {
+            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenJugador.png"));
+            Image imagen = icono.getImage();
+            ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
+            jLabel7.setIcon(iconoEscalado);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
         }
     }
 
@@ -1442,7 +1456,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             String dotPath = "C:\\release\\bin\\dot.exe";
             String fileInputPath = "C:\\release\\Estructuras\\archivoPalabras.txt";
-            String fileOutputPath = "C:\\release\\Estructuras\\imagenPalabras.png";
+            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenPalabras.png";
             String tParam = "-Tjpg";
             String tOParam = "-o";
             String[] cmd = new String[5];
@@ -1458,8 +1472,19 @@ public class Principal extends javax.swing.JFrame {
         } finally {
         }
     }
-    //Fin metodos de palabra 
 
+    public void cargarImagenPantallaPalabras() {
+        try {
+            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenPalabras.png"));
+            Image imagen = icono.getImage();
+            ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
+            jLabel1.setIcon(iconoEscalado);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+
+    //Fin metodos de palabra 
     //Bonus casillas
     public void addBonus(Bonus actual) {
         if (primerBonus == null) {
@@ -1578,4 +1603,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
 }
