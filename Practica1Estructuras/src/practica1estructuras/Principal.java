@@ -106,13 +106,13 @@ public class Principal extends javax.swing.JFrame {
     int contadorZ = 1;
     int contadorZZ = 0;
 
-    public   MouseListener ml;
-    
+    public MouseListener ml;
+
     public Principal() {
         initComponents();
         setLocationRelativeTo(null);
-        
-       ml = new MouseListener() {
+
+        ml = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent me) {
             }
@@ -136,28 +136,25 @@ public class Principal extends javax.swing.JFrame {
             public void mouseExited(MouseEvent me) {
             }
         };
-    
-    jLabel12.addMouseListener(ml);
-    jLabel13.addMouseListener(ml);
-    jLabel14.addMouseListener(ml);
-    jLabel15.addMouseListener(ml);
-    jLabel16.addMouseListener(ml);
-    jLabel17.addMouseListener(ml);
-    jLabel18.addMouseListener(ml);
-    
-    jLabel12.setTransferHandler(new TransferHandler("text"));
-    jLabel13.setTransferHandler(new TransferHandler("text"));
-    jLabel14.setTransferHandler(new TransferHandler("text"));
-    jLabel15.setTransferHandler(new TransferHandler("text"));
-    jLabel16.setTransferHandler(new TransferHandler("text"));
-    jLabel17.setTransferHandler(new TransferHandler("text"));
-    jLabel18.setTransferHandler(new TransferHandler("text"));
-    
+
+        jLabel12.addMouseListener(ml);
+        jLabel13.addMouseListener(ml);
+        jLabel14.addMouseListener(ml);
+        jLabel15.addMouseListener(ml);
+        jLabel16.addMouseListener(ml);
+        jLabel17.addMouseListener(ml);
+        jLabel18.addMouseListener(ml);
+
+        jLabel12.setTransferHandler(new TransferHandler("text"));
+        jLabel13.setTransferHandler(new TransferHandler("text"));
+        jLabel14.setTransferHandler(new TransferHandler("text"));
+        jLabel15.setTransferHandler(new TransferHandler("text"));
+        jLabel16.setTransferHandler(new TransferHandler("text"));
+        jLabel17.setTransferHandler(new TransferHandler("text"));
+        jLabel18.setTransferHandler(new TransferHandler("text"));
+
     }
 
-    
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -558,7 +555,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        crearTablero(dimension);    
+        crearTablero(dimension);
+        asigArriba();
+        asigAbajo();
         recPosicion();// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1115,6 +1114,8 @@ public class Principal extends javax.swing.JFrame {
     //Fin metodos de palabra 
 
     //Creacion de tablero
+    //Con esto creo las posiciones y les asigno su izquierda derecha pero aun no 
+    //como matriz sino como una lista larga
     public void crearTablero(int dimension) {
         int posx = 21;
         int posy = 6;
@@ -1163,32 +1164,68 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
-    public void crearLabels(int tamano) {
+    //Con esto les asigno su arriba abajo y si es el ultimo de la fila que su derecha = null y si es
+    //el primero que su izquierda = null
+    public void asigArriba() {
+        Posicion bandera = new Posicion();
+        bandera = primeraPosicion;
 
-        for (int i = 0; i < tamano; i++) {
-            for (int j = 0; j < tamano; j++) {
+        while (bandera != null) {
+            if (bandera.fila == 0) {
+                bandera.arriba = null;
+                System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "  Arriba es null");
+                bandera = bandera.derecha;
+            } else {
+                Posicion temp = new Posicion();
+                temp = primeraPosicion;
+                while (temp != null) {
+                    if ((bandera.fila -1  == temp.fila) && (bandera.columna == temp.columna)) {
+                        bandera.arriba = temp;
+                        System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "   Arriba tiene a : " + bandera.arriba.fila + "," + bandera.arriba.columna);
+                        break;
+                    }
+                    temp = temp.derecha;
 
+                }
+                bandera = bandera.derecha;
+            }
+
+        }
+    }
+    
+    public void asigAbajo(){
+    Posicion bandera = new Posicion();
+        bandera = primeraPosicion;
+
+        while (bandera != null) {
+            if (bandera.fila == dimension -1) {
+                bandera.abajo = null;
+                System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "  Abajo es null");
+                bandera = bandera.derecha;
+            } else {
+                Posicion temp = new Posicion();
+                temp = primeraPosicion;
+                while (temp != null) {
+                    if ((bandera.fila +1  == temp.fila) && (bandera.columna == temp.columna)) {
+                        bandera.abajo = temp;
+                        System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "   Abajo tiene a : " + bandera.abajo.fila + "," + bandera.abajo.columna);
+                        break;
+                    }
+                    temp = temp.derecha;
+
+                }
+                bandera = bandera.derecha;
             }
 
         }
     }
 
-    public void recorrerFila() {
+    public void recPosicion() {
         Posicion bandera = new Posicion();
         bandera = primeraPosicion;
-
         while (bandera != null) {
-            System.out.println("posicion: " + bandera.columna);
-            bandera = bandera.derecha;
-        }
-    }
-
-    public void recPosicion() {
-Posicion bandera = new Posicion();
-bandera = ultimaPosicion;
-        while(bandera != null){
             System.out.println("Posicion: " + bandera.fila + "," + bandera.columna);
-            bandera = bandera.izquierda;
+            bandera = bandera.derecha;
         }
     }
 
