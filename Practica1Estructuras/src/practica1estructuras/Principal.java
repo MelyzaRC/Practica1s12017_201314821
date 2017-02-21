@@ -571,6 +571,8 @@ public class Principal extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (jugarOK) {
             asignarFichasAJugador();
+            ArchivoFichasActivas();
+            generarImagenFichasActivas();
             imprimirJugadores();
         } else {
             JOptionPane.showMessageDialog(this, "No se han ingresado los jugadores", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
@@ -659,7 +661,7 @@ public class Principal extends javax.swing.JFrame {
 
         }
     }
-
+ 
     public void asigAbajo() {
         Posicion bandera = new Posicion();
         bandera = primeraPosicion;
@@ -729,7 +731,46 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
+    public void addBonus(Bonus actual) {
+        if (primerBonus == null) {
+            primerBonus = actual;
+            ultimoBonus = actual;
+            System.out.println("Se ha registrado una casilla de bonus: " + actual.fila + "," + actual.columna + "  x" + actual.bonus);
+        } else {
+            ultimoBonus.siguiente = actual;
+            ultimoBonus = actual;
+            ultimoBonus.siguiente = null;
+            System.out.println("Se ha registrado una casilla de bonus: " + actual.fila + "," + actual.columna + "  x" + actual.bonus);
+        }
+    }
+
+    public void asignarBonus() {
+        Bonus bandera = new Bonus();
+        bandera = primerBonus;
+
+        while (bandera != null) {
+
+            Posicion temp = new Posicion();
+            temp = primeraPosicion;
+
+            while (temp != null) {
+
+                Posicion temp2 = new Posicion();
+                temp2 = temp;
+                while (temp2 != null) {
+                    if ((temp2.fila == bandera.fila) && (temp2.columna == bandera.columna)) {
+                        temp2.bonus = bandera.bonus;
+                        temp2.contenido.setText("x" + String.valueOf(temp2.bonus));
+                    }
+                    temp2 = temp2.derecha;
+                }
+                temp = temp.abajo;
+            }
+            bandera = bandera.siguiente;
+        }
+    }
     //Fin creacion de tablero
+    
     //Metodos de jugador
     public void addJugador(Jugador actual) {
         if (primeroJugador == null) {
@@ -854,12 +895,7 @@ public class Principal extends javax.swing.JFrame {
 
     public void asignarFichasAJugador() {
         Jugador paraAsignar = new Jugador();
-        paraAsignar = primeroJugador;
-
-        while (paraAsignar != null) {
-
-            if (paraAsignar == ultimoJugador) {
-                if (paraAsignar.primera == null) {
+        paraAsignar = jugadorActual;
                     for (int asig = 0; asig < 7; asig++) {
                         fichaRetirar = primeraFicha;
                         if (paraAsignar.primera == null) {
@@ -878,35 +914,64 @@ public class Principal extends javax.swing.JFrame {
                             primeraFicha = fi;
                         }
                     }
-                }
-                break;
-            } else {
-                if (paraAsignar.primera == null) {
-                    for (int asig = 0; asig < 7; asig++) {
-                        fichaRetirar = primeraFicha;
-                        if (paraAsignar.primera == null) {
-                            Ficha fi = new Ficha();
-                            fi = primeraFicha.siguiente;
-                            paraAsignar.primera = fichaRetirar;
-                            paraAsignar.ultima = fichaRetirar;
-
-                            primeraFicha = fi;
-                        } else {
-                            Ficha fi = new Ficha();
-                            fi = primeraFicha.siguiente;
-                            paraAsignar.ultima.siguiente = fichaRetirar;
-                            paraAsignar.ultima = fichaRetirar;
-                            paraAsignar.ultima.siguiente = null;
-                            primeraFicha = fi;
-                        }
-                    }
-                }
-                paraAsignar = paraAsignar.siguiente;
-            }
-        }
 
     }
 
+    public void generarImagenFichasActivas(){
+     try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\release\\Estructuras\\archivoJugadorFichas.txt";
+            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichasActivas.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        } finally {
+        }
+    }
+    
+    public void ArchivoFichasActivas(){
+    String textArchivo = "digraph imagenFichasActivas{\n";
+
+        Ficha bandera = new Ficha();
+        bandera = jugadorActual.primera;
+
+        do {
+            if (bandera == jugadorActual.primera && bandera == jugadorActual.ultima) {
+                textArchivo = textArchivo + bandera.letra + ";";
+            } else if (bandera == jugadorActual.primera) {
+                textArchivo = textArchivo + bandera.letra;
+            } else if (bandera == jugadorActual.ultima) {
+                textArchivo = textArchivo + "->" + bandera.letra + ";\n";
+            } else {
+                textArchivo = textArchivo + "->" + bandera.letra + ";\n" + bandera.letra;
+            }
+            bandera = bandera.siguiente;
+        } while (bandera != null);
+        textArchivo = textArchivo + "}";
+
+        try {
+            File archivo = new File("C:\\release\\Estructuras\\archivoJugadorFichas.txt");
+            if (archivo.exists()) {
+                archivo.delete();
+            }
+            FileWriter escribir = new FileWriter(archivo, true);
+            escribir.write(textArchivo);
+            escribir.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        }
+
+    }
+    
     public void imprimirJugadores() {
         Jugador bandera = new Jugador();
         bandera = primeroJugador;
@@ -1485,45 +1550,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     //Fin metodos de palabra 
-    //Bonus casillas
-    public void addBonus(Bonus actual) {
-        if (primerBonus == null) {
-            primerBonus = actual;
-            ultimoBonus = actual;
-            System.out.println("Se ha registrado una casilla de bonus: " + actual.fila + "," + actual.columna + "  x" + actual.bonus);
-        } else {
-            ultimoBonus.siguiente = actual;
-            ultimoBonus = actual;
-            ultimoBonus.siguiente = null;
-            System.out.println("Se ha registrado una casilla de bonus: " + actual.fila + "," + actual.columna + "  x" + actual.bonus);
-        }
-    }
-
-    public void asignarBonus() {
-        Bonus bandera = new Bonus();
-        bandera = primerBonus;
-
-        while (bandera != null) {
-
-            Posicion temp = new Posicion();
-            temp = primeraPosicion;
-
-            while (temp != null) {
-
-                Posicion temp2 = new Posicion();
-                temp2 = temp;
-                while (temp2 != null) {
-                    if ((temp2.fila == bandera.fila) && (temp2.columna == bandera.columna)) {
-                        temp2.bonus = bandera.bonus;
-                        temp2.contenido.setText("x" + String.valueOf(temp2.bonus));
-                    }
-                    temp2 = temp2.derecha;
-                }
-                temp = temp.abajo;
-            }
-            bandera = bandera.siguiente;
-        }
-    }
+   
 
     /**
      * @param args the command line arguments
