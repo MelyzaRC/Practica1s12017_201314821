@@ -538,7 +538,7 @@ public class Principal extends javax.swing.JFrame {
         if (nombre == null) {
             System.out.println("No ingresado");
         } else {
-            Jugador nuevo = new Jugador(nombre, 0, null);
+            Jugador nuevo = new Jugador(nombre, 0);
             addJugador(nuevo);
             try {
                 generarArchivoImagen();
@@ -569,7 +569,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (jugarOK) {
-
+            asignarFichasAJugador();
+            imprimirJugadores();
         } else {
             JOptionPane.showMessageDialog(this, "No se han ingresado los jugadores", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -848,17 +849,50 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
-    public void asignarFichasAJugador(){
-        fichaRetirar = primeraFicha;
-    if(jugadorActual.fichas == null){
-    for(int asig = 0; asig < 7 ; asig++){
-    if(jugadorActual.fichas == null){
-    jugadorActual.fichas = fichaRetirar;
+    public void asignarFichasAJugador() {
+        
+        if (jugadorActual.primera == null) {
+            for (int asig = 0; asig < 7; asig++) {
+                fichaRetirar = primeraFicha; 
+                if (jugadorActual.primera == null) {
+                    Ficha fi = new Ficha();
+                    fi = primeraFicha.siguiente;
+                    jugadorActual.primera = fichaRetirar;
+                    jugadorActual.ultima = fichaRetirar;
+
+                    primeraFicha = fi;
+                } else {
+                    Ficha fi = new Ficha();
+                    fi = primeraFicha.siguiente;
+                    jugadorActual.ultima.siguiente = fichaRetirar;
+                    jugadorActual.ultima = fichaRetirar;
+                    jugadorActual.ultima.siguiente = null;
+                    primeraFicha = fi;
+                }
+            }
+        }
     }
-    
+
+    public void imprimirJugadores() {
+        Jugador bandera = new Jugador();
+        bandera = primeroJugador;
+
+        while (bandera != ultimoJugador) {
+
+            if (bandera.primera != null) {
+                Ficha temp = new Ficha();
+                temp = bandera.primera;
+                String text = "El jugador: " + bandera.nombre + " Tiene las fichas: ";
+                while (temp != null) {
+                    text = text + temp.letra + "  ";
+                    temp = temp.siguiente;
+                }
+                System.out.println(text);
+            }
+            bandera = bandera.siguiente;
+        }
     }
-    }
-    }
+
     //fin metodos de jugador
     //Metodos de ficha
     public void llenarColaFichas() {
@@ -874,7 +908,7 @@ public class Principal extends javax.swing.JFrame {
         switch (numero) {
             case 1:
                 if (contadorAA < contadorA) {
-                    a = new Ficha("A", 1, null,null);
+                    a = new Ficha("A", 1);
                     addFicha(a, index);
                     contadorAA++;
                 } else {
@@ -883,7 +917,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 2:
                 if (contadorBB < contadorB) {
-                    b = new Ficha("B", 3, null,null);
+                    b = new Ficha("B", 3);
                     addFicha(b, index);
                     contadorBB++;
                 } else {
@@ -892,7 +926,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 3:
                 if (contadorCC < contadorC) {
-                    c = new Ficha("C", 1, null,null);
+                    c = new Ficha("C", 1);
                     addFicha(c, index);
                     contadorCC++;
                 } else {
@@ -901,7 +935,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 4:
                 if (contadorDD < contadorD) {
-                    d = new Ficha("D", 2, null,null);
+                    d = new Ficha("D", 2);
                     addFicha(d, index);
                     contadorDD++;
                 } else {
@@ -910,7 +944,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 5:
                 if (contadorEE < contadorE) {
-                    e = new Ficha("E", 1, null,null);
+                    e = new Ficha("E", 1);
                     addFicha(e, index);
                     contadorEE++;
                 } else {
@@ -919,7 +953,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 6:
                 if (contadorFF < contadorF) {
-                    f = new Ficha("F", 4, null,null);
+                    f = new Ficha("F", 4);
                     addFicha(f, index);
                     contadorFF++;
                 } else {
@@ -928,7 +962,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 7:
                 if (contadorGG < contadorG) {
-                    g = new Ficha("G", 2, null,null);
+                    g = new Ficha("G", 2);
                     addFicha(g, index);
                     contadorGG++;
                 } else {
@@ -937,7 +971,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 8:
                 if (contadorHH < contadorH) {
-                    h = new Ficha("H", 4, null,null);
+                    h = new Ficha("H", 4);
                     addFicha(h, index);
                     contadorHH++;
                 } else {
@@ -946,7 +980,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 9:
                 if (contadorII < contadorI) {
-                    i = new Ficha("I", 1, null,null);
+                    i = new Ficha("I", 1);
                     addFicha(i, index);
                     contadorII++;
                 } else {
@@ -955,7 +989,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 10:
                 if (contadorJJ < contadorJ) {
-                    j = new Ficha("J", 8, null,null);
+                    j = new Ficha("J", 8);
                     addFicha(j, index);
                     contadorJJ++;
                 } else {
@@ -964,7 +998,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 11:
                 if (contadorLL < contadorL) {
-                    l = new Ficha("L", 1, null,null);
+                    l = new Ficha("L", 1);
                     addFicha(l, index);
                     contadorLL++;
                 } else {
@@ -973,7 +1007,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 12:
                 if (contadorMM < contadorM) {
-                    m = new Ficha("M", 3, null,null);
+                    m = new Ficha("M", 3);
                     addFicha(m, index);
                     contadorMM++;
                 } else {
@@ -982,7 +1016,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 13:
                 if (contadorNN < contadorN) {
-                    n = new Ficha("N", 1, null,null);
+                    n = new Ficha("N", 1);
                     addFicha(n, index);
                     contadorNN++;
                 } else {
@@ -991,7 +1025,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 14:
                 if (contadorNN_ < contadorN_) {
-                    n_ = new Ficha("Ñ", 8, null,null);
+                    n_ = new Ficha("Ñ", 8);
                     addFicha(n_, index);
                     contadorNN_++;
                 } else {
@@ -1000,7 +1034,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 15:
                 if (contadorOO < contadorO) {
-                    o = new Ficha("O", 1, null,null);
+                    o = new Ficha("O", 1);
                     addFicha(o, index);
                     contadorOO++;
                 } else {
@@ -1009,7 +1043,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 16:
                 if (contadorPP < contadorP) {
-                    p = new Ficha("P", 3, null,null);
+                    p = new Ficha("P", 3);
                     addFicha(p, index);
                     contadorPP++;
                 } else {
@@ -1018,7 +1052,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 17:
                 if (contadorQQ < contadorQ) {
-                    q = new Ficha("Q", 5, null,null);
+                    q = new Ficha("Q", 5);
                     addFicha(q, index);
                     contadorQQ++;
                 } else {
@@ -1027,7 +1061,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 18:
                 if (contadorRR < contadorR) {
-                    r = new Ficha("R", 1, null,null);
+                    r = new Ficha("R", 1);
                     addFicha(r, index);
                     contadorRR++;
                 } else {
@@ -1036,7 +1070,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 19:
                 if (contadorSS < contadorS) {
-                    s = new Ficha("S", 1, null,null);
+                    s = new Ficha("S", 1);
                     addFicha(s, index);
                     contadorSS++;
                 } else {
@@ -1045,7 +1079,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 20:
                 if (contadorTT < contadorT) {
-                    t = new Ficha("T", 1, null,null);
+                    t = new Ficha("T", 1);
                     addFicha(t, index);
                     contadorTT++;
                 } else {
@@ -1054,7 +1088,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 21:
                 if (contadorUU < contadorU) {
-                    u = new Ficha("U", 1, null,null);
+                    u = new Ficha("U", 1);
                     addFicha(u, index);
                     contadorUU++;
                 } else {
@@ -1063,7 +1097,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 22:
                 if (contadorVV < contadorV) {
-                    v = new Ficha("V", 4, null,null);
+                    v = new Ficha("V", 4);
                     addFicha(v, index);
                     contadorVV++;
                 } else {
@@ -1072,7 +1106,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 23:
                 if (contadorXX < contadorX) {
-                    x = new Ficha("X", 8, null,null);
+                    x = new Ficha("X", 8);
                     addFicha(x, index);
                     contadorXX++;
                 } else {
@@ -1081,7 +1115,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 24:
                 if (contadorYY < contadorY) {
-                    y = new Ficha("Y", 4, null,null);
+                    y = new Ficha("Y", 4);
                     addFicha(y, index);
                     contadorYY++;
                 } else {
@@ -1090,7 +1124,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 25:
                 if (contadorZZ < contadorZ) {
-                    z = new Ficha("Z", 10, null,null);
+                    z = new Ficha("Z", 10);
                     addFicha(z, index);
                     contadorZZ++;
                 } else {
@@ -1115,7 +1149,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void llenarNulas(int index) {
-
         if (contadorAA < contadorA) {
             a = new Ficha("A", 1);
             addFicha(a, index);

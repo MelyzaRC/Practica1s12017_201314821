@@ -9,20 +9,23 @@ public class Jugador {
 
     public String nombre;
     public int punteo;
-    public Ficha fichas;
+    public Ficha primera;
+    public Ficha ultima;
     public Jugador siguiente;
 
     public Jugador() {
         nombre = null;
         punteo = 0;
-        fichas = null;
+        primera = null;
+        ultima = null;
         siguiente = null;
     }
 
-    public Jugador(String name, int p, Ficha fi) {
+    public Jugador(String name, int p) {
         nombre = name;
         punteo = p;
-        fichas = fi;
+        primera = null;
+        ultima = null;
         siguiente = null;
     }
     
