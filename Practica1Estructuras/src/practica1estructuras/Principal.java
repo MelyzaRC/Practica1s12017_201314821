@@ -558,6 +558,8 @@ public class Principal extends javax.swing.JFrame {
         crearTablero(dimension);
         asigArriba();
         asigAbajo();
+        retirarIzquierda();
+        retirarDerecha();
         recPosicion();// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1173,15 +1175,15 @@ public class Principal extends javax.swing.JFrame {
         while (bandera != null) {
             if (bandera.fila == 0) {
                 bandera.arriba = null;
-                System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "  Arriba es null");
+                System.out.println("Posicion: " + bandera.fila + "," + bandera.columna + "  Arriba es null");
                 bandera = bandera.derecha;
             } else {
                 Posicion temp = new Posicion();
                 temp = primeraPosicion;
                 while (temp != null) {
-                    if ((bandera.fila -1  == temp.fila) && (bandera.columna == temp.columna)) {
+                    if ((bandera.fila - 1 == temp.fila) && (bandera.columna == temp.columna)) {
                         bandera.arriba = temp;
-                        System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "   Arriba tiene a : " + bandera.arriba.fila + "," + bandera.arriba.columna);
+                        System.out.println("Posicion: " + bandera.fila + "," + bandera.columna + "   Arriba tiene a : " + bandera.arriba.fila + "," + bandera.arriba.columna);
                         break;
                     }
                     temp = temp.derecha;
@@ -1192,23 +1194,23 @@ public class Principal extends javax.swing.JFrame {
 
         }
     }
-    
-    public void asigAbajo(){
-    Posicion bandera = new Posicion();
+
+    public void asigAbajo() {
+        Posicion bandera = new Posicion();
         bandera = primeraPosicion;
 
         while (bandera != null) {
-            if (bandera.fila == dimension -1) {
+            if (bandera.fila == dimension - 1) {
                 bandera.abajo = null;
-                System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "  Abajo es null");
+                System.out.println("Posicion: " + bandera.fila + "," + bandera.columna + "  Abajo es null");
                 bandera = bandera.derecha;
             } else {
                 Posicion temp = new Posicion();
                 temp = primeraPosicion;
                 while (temp != null) {
-                    if ((bandera.fila +1  == temp.fila) && (bandera.columna == temp.columna)) {
+                    if ((bandera.fila + 1 == temp.fila) && (bandera.columna == temp.columna)) {
                         bandera.abajo = temp;
-                        System.out.println("Posicion: "+bandera.fila+"," + bandera.columna+ "   Abajo tiene a : " + bandera.abajo.fila + "," + bandera.abajo.columna);
+                        System.out.println("Posicion: " + bandera.fila + "," + bandera.columna + "   Abajo tiene a : " + bandera.abajo.fila + "," + bandera.abajo.columna);
                         break;
                     }
                     temp = temp.derecha;
@@ -1217,6 +1219,34 @@ public class Principal extends javax.swing.JFrame {
                 bandera = bandera.derecha;
             }
 
+        }
+    }
+
+    public void retirarIzquierda() {
+        Posicion bandera = new Posicion();
+        bandera = primeraPosicion;
+
+        while (bandera != null) {
+            if (bandera.columna == 0) {
+                bandera.izquierda = null;
+            }
+            bandera = bandera.derecha;
+        }
+    }
+
+    public void retirarDerecha() {
+        Posicion bandera = new Posicion();
+        bandera = primeraPosicion;
+
+        while (bandera != null) {
+            if (bandera.columna == dimension - 1) {
+                Posicion temp = new Posicion();
+                temp = bandera.derecha;
+                bandera.derecha = null;
+                bandera = temp;
+            }else{
+            bandera = bandera.derecha;
+            } 
         }
     }
 
@@ -1224,8 +1254,13 @@ public class Principal extends javax.swing.JFrame {
         Posicion bandera = new Posicion();
         bandera = primeraPosicion;
         while (bandera != null) {
-            System.out.println("Posicion: " + bandera.fila + "," + bandera.columna);
-            bandera = bandera.derecha;
+            Posicion temp = new Posicion();
+            temp = bandera;
+            while (temp != null) {
+                System.out.println("Posicion: " + temp.fila + "," + temp.columna + " de recorrido");
+                temp = temp.derecha;
+            }
+            bandera = bandera.abajo;
         }
     }
 
