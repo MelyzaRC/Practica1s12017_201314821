@@ -850,46 +850,92 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void asignarFichasAJugador() {
-        
-        if (jugadorActual.primera == null) {
-            for (int asig = 0; asig < 7; asig++) {
-                fichaRetirar = primeraFicha; 
-                if (jugadorActual.primera == null) {
-                    Ficha fi = new Ficha();
-                    fi = primeraFicha.siguiente;
-                    jugadorActual.primera = fichaRetirar;
-                    jugadorActual.ultima = fichaRetirar;
+        Jugador paraAsignar = new Jugador();
+        paraAsignar = primeroJugador;
 
-                    primeraFicha = fi;
-                } else {
-                    Ficha fi = new Ficha();
-                    fi = primeraFicha.siguiente;
-                    jugadorActual.ultima.siguiente = fichaRetirar;
-                    jugadorActual.ultima = fichaRetirar;
-                    jugadorActual.ultima.siguiente = null;
-                    primeraFicha = fi;
+        while (paraAsignar != null) {
+
+            if (paraAsignar == ultimoJugador) {
+                if (paraAsignar.primera == null) {
+                    for (int asig = 0; asig < 7; asig++) {
+                        fichaRetirar = primeraFicha;
+                        if (paraAsignar.primera == null) {
+                            Ficha fi = new Ficha();
+                            fi = primeraFicha.siguiente;
+                            paraAsignar.primera = fichaRetirar;
+                            paraAsignar.ultima = fichaRetirar;
+
+                            primeraFicha = fi;
+                        } else {
+                            Ficha fi = new Ficha();
+                            fi = primeraFicha.siguiente;
+                            paraAsignar.ultima.siguiente = fichaRetirar;
+                            paraAsignar.ultima = fichaRetirar;
+                            paraAsignar.ultima.siguiente = null;
+                            primeraFicha = fi;
+                        }
+                    }
                 }
+                break;
+            } else {
+                if (paraAsignar.primera == null) {
+                    for (int asig = 0; asig < 7; asig++) {
+                        fichaRetirar = primeraFicha;
+                        if (paraAsignar.primera == null) {
+                            Ficha fi = new Ficha();
+                            fi = primeraFicha.siguiente;
+                            paraAsignar.primera = fichaRetirar;
+                            paraAsignar.ultima = fichaRetirar;
+
+                            primeraFicha = fi;
+                        } else {
+                            Ficha fi = new Ficha();
+                            fi = primeraFicha.siguiente;
+                            paraAsignar.ultima.siguiente = fichaRetirar;
+                            paraAsignar.ultima = fichaRetirar;
+                            paraAsignar.ultima.siguiente = null;
+                            primeraFicha = fi;
+                        }
+                    }
+                }
+                paraAsignar = paraAsignar.siguiente;
             }
         }
+
     }
 
     public void imprimirJugadores() {
         Jugador bandera = new Jugador();
         bandera = primeroJugador;
 
-        while (bandera != ultimoJugador) {
+        while (bandera != null) {
 
-            if (bandera.primera != null) {
-                Ficha temp = new Ficha();
-                temp = bandera.primera;
-                String text = "El jugador: " + bandera.nombre + " Tiene las fichas: ";
-                while (temp != null) {
-                    text = text + temp.letra + "  ";
-                    temp = temp.siguiente;
+            if (bandera == ultimoJugador) {
+                if (bandera.primera != null) {
+                    Ficha temp = new Ficha();
+                    temp = bandera.primera;
+                    String text = "El jugador: " + bandera.nombre + " Tiene las fichas: ";
+                    while (temp != null) {
+                        text = text + temp.letra + "  ";
+                        temp = temp.siguiente;
+                    }
+                    System.out.println(text);
                 }
-                System.out.println(text);
+                break;
+            } else {
+                if (bandera.primera != null) {
+                    Ficha temp = new Ficha();
+                    temp = bandera.primera;
+                    String text = "El jugador: " + bandera.nombre + " Tiene las fichas: ";
+                    while (temp != null) {
+                        text = text + temp.letra + "  ";
+                        temp = temp.siguiente;
+                    }
+                    System.out.println(text);
+                }
+                bandera = bandera.siguiente;
             }
-            bandera = bandera.siguiente;
+
         }
     }
 
