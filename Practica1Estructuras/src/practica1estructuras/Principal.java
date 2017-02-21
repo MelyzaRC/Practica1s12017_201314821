@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileWriter;
+import javafx.scene.paint.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -15,8 +16,10 @@ import javax.swing.border.LineBorder;
 
 public class Principal extends javax.swing.JFrame {
 
-    public int dimension = 10;
+    public int dimension;
 
+    public Ficha fichaRetirar = new Ficha();
+    public Ficha asTemp = new Ficha();
     Posicion primeraPosicion = null;
     Posicion ultimaPosicion = null;
 
@@ -27,82 +30,82 @@ public class Principal extends javax.swing.JFrame {
     public Jugador ultimoJugador = null;
     public Jugador jugadorActual = new Jugador();
 
-    Ficha primeraFicha = null;
-    Ficha ultimaFicha = null;
+    public Ficha primeraFicha = null;
+    public Ficha ultimaFicha = null;
 
-    Ficha a = new Ficha("A", 1);
+    public Ficha a;
     int contadorA = 12;
     int contadorAA = 0;
-    Ficha b = new Ficha("B", 3);
+    public Ficha b;
     int contadorB = 2;
     int contadorBB = 0;
-    Ficha c = new Ficha("C", 1);
+    public Ficha c;
     int contadorC = 4;
     int contadorCC = 0;
-    Ficha d = new Ficha("D", 2);
+    public Ficha d;
     int contadorD = 5;
     int contadorDD = 0;
-    Ficha e = new Ficha("E", 1);
+    public Ficha e;
     int contadorE = 12;
     int contadorEE = 0;
-    Ficha f = new Ficha("F", 4);
+    public Ficha f;
     int contadorF = 1;
     int contadorFF = 0;
-    Ficha g = new Ficha("G", 2);
+    public Ficha g;
     int contadorG = 2;
     int contadorGG = 0;
-    Ficha h = new Ficha("H", 4);
+    public Ficha h;
     int contadorH = 2;
     int contadorHH = 0;
-    Ficha i = new Ficha("I", 1);
+    public Ficha i;
     int contadorI = 6;
     int contadorII = 0;
-    Ficha j = new Ficha("J", 8);
+    public Ficha j;
     int contadorJ = 1;
     int contadorJJ = 0;
-    Ficha l = new Ficha("L", 1);
+    public Ficha l;
     int contadorL = 4;
     int contadorLL = 0;
-    Ficha m = new Ficha("M", 3);
+    public Ficha m;
     int contadorM = 2;
     int contadorMM = 0;
-    Ficha n = new Ficha("N", 1);
+    public Ficha n;
     int contadorN = 5;
     int contadorNN = 0;
-    Ficha n_ = new Ficha("Ñ", 8);
+    public Ficha n_;
     int contadorN_ = 1;
     int contadorNN_ = 0;
-    Ficha o = new Ficha("O", 1);
+    public Ficha o;
     int contadorO = 9;
     int contadorOO = 0;
-    Ficha p = new Ficha("P", 3);
+    public Ficha p;
     int contadorP = 2;
     int contadorPP = 0;
-    Ficha q = new Ficha("Q", 5);
+    public Ficha q;
     int contadorQ = 1;
     int contadorQQ = 0;
-    Ficha r = new Ficha("R", 1);
+    public Ficha r;
     int contadorR = 5;
     int contadorRR = 0;
-    Ficha s = new Ficha("S", 1);
+    public Ficha s;
     int contadorS = 6;
     int contadorSS = 0;
-    Ficha t = new Ficha("T", 1);
+    public Ficha t;
     int contadorT = 4;
     int contadorTT = 0;
-    Ficha u = new Ficha("U", 1);
+    public Ficha u;
     int contadorU = 5;
     int contadorUU = 0;
-    Ficha v = new Ficha("V", 4);
+    public Ficha v;
     int contadorV = 1;
     int contadorVV = 0;
-    Ficha x = new Ficha("X", 8);
+    public Ficha x;
     int contadorX = 1;
     int contadorXX = 0;
-    Ficha y = new Ficha("Y", 4);
+    public Ficha y;
     int contadorY = 1;
     int contadorYY = 0;
-    Ficha z = new Ficha("Z", 10);
+    public Ficha z;
     int contadorZ = 1;
     int contadorZZ = 0;
 
@@ -122,6 +125,7 @@ public class Principal extends javax.swing.JFrame {
                 JComponent jc = (JComponent) me.getSource();
                 TransferHandler th = jc.getTransferHandler();
                 th.exportAsDrag(jc, me, TransferHandler.COPY);
+                jc.setToolTipText("");
             }
 
             @Override
@@ -196,6 +200,9 @@ public class Principal extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jButton8 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -203,6 +210,7 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 0));
         jLabel2.setText("Turno actual:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -363,10 +371,26 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Ver tablero");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("jButton7");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("jTextField1");
+
+        jButton8.setText("jButton8");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -395,10 +419,17 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(603, 603, 603)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
+                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton7)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8)))
+                        .addGap(313, 313, 313)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -448,7 +479,8 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jButton6)
                                 .addGap(87, 87, 87)))))
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,14 +499,19 @@ public class Principal extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jButton1))
                                 .addGap(3, 3, 3)
-                                .addComponent(jLabel8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton8))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(11, 11, 11)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(69, 69, 69)
-                                        .addComponent(jButton2)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jButton2)
+                                            .addComponent(jButton7))))
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)
                                 .addGap(6, 6, 6)
@@ -496,9 +533,9 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jCheckBox4)
                                 .addGap(7, 7, 7)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 104, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(475, Short.MAX_VALUE)
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -560,8 +597,23 @@ public class Principal extends javax.swing.JFrame {
         asigAbajo();
         retirarIzquierda();
         retirarDerecha();
-        recPosicion();// TODO add your handling code here:
+        recPosicion();
+        setVisible(false);
+        setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        llenarColaFichas();
+        asTemp = asTemp.siguiente;
+        System.out.println("Ficha: " + asTemp.letra + "  Puntos: " + asTemp.puntos);
+        recorrerFichas();
+        //recorrerFichas();// TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        asignarALab();
+        recorrerFichas();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     //Metodos de jugador
     public void addJugador(Jugador actual) {
@@ -685,17 +737,19 @@ public class Principal extends javax.swing.JFrame {
     //fin metodos de jugador
     //Metodos de ficha
     public void llenarColaFichas() {
-
-        for (int index = 1; index < 8; index++) {
-            valuarFicha(index);
+        int counter = 0;
+        for (int index = 0; index < 95; index++) {
+            valuarFicha(counter);
         }
     }
 
     public void valuarFicha(int index) {
+
         int numero = (int) (Math.random() * 25) + 1;
         switch (numero) {
             case 1:
                 if (contadorAA < contadorA) {
+                    a = new Ficha("A", 1);
                     addFicha(a, index);
                     contadorAA++;
                 } else {
@@ -704,6 +758,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 2:
                 if (contadorBB < contadorB) {
+                    b = new Ficha("B", 3);
                     addFicha(b, index);
                     contadorBB++;
                 } else {
@@ -712,6 +767,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 3:
                 if (contadorCC < contadorC) {
+                    c = new Ficha("C", 1);
                     addFicha(c, index);
                     contadorCC++;
                 } else {
@@ -720,6 +776,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 4:
                 if (contadorDD < contadorD) {
+                    d = new Ficha("D", 2);
                     addFicha(d, index);
                     contadorDD++;
                 } else {
@@ -728,6 +785,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 5:
                 if (contadorEE < contadorE) {
+                    e = new Ficha("E", 1);
                     addFicha(e, index);
                     contadorEE++;
                 } else {
@@ -736,6 +794,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 6:
                 if (contadorFF < contadorF) {
+                    f = new Ficha("F", 4);
                     addFicha(f, index);
                     contadorFF++;
                 } else {
@@ -744,6 +803,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 7:
                 if (contadorGG < contadorG) {
+                    g = new Ficha("G", 2);
                     addFicha(g, index);
                     contadorGG++;
                 } else {
@@ -752,6 +812,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 8:
                 if (contadorHH < contadorH) {
+                    h = new Ficha("H", 4);
                     addFicha(h, index);
                     contadorHH++;
                 } else {
@@ -760,6 +821,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 9:
                 if (contadorII < contadorI) {
+                    i = new Ficha("I", 1);
                     addFicha(i, index);
                     contadorII++;
                 } else {
@@ -768,6 +830,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 10:
                 if (contadorJJ < contadorJ) {
+                    j = new Ficha("J", 8);
                     addFicha(j, index);
                     contadorJJ++;
                 } else {
@@ -776,6 +839,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 11:
                 if (contadorLL < contadorL) {
+                    l = new Ficha("L", 1);
                     addFicha(l, index);
                     contadorLL++;
                 } else {
@@ -784,6 +848,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 12:
                 if (contadorMM < contadorM) {
+                    m = new Ficha("M", 3);
                     addFicha(m, index);
                     contadorMM++;
                 } else {
@@ -792,6 +857,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 13:
                 if (contadorNN < contadorN) {
+                    n = new Ficha("N", 1);
                     addFicha(n, index);
                     contadorNN++;
                 } else {
@@ -800,6 +866,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 14:
                 if (contadorNN_ < contadorN_) {
+                    n_ = new Ficha("Ñ", 8);
                     addFicha(n_, index);
                     contadorNN_++;
                 } else {
@@ -808,6 +875,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 15:
                 if (contadorOO < contadorO) {
+                    o = new Ficha("O", 1);
                     addFicha(o, index);
                     contadorOO++;
                 } else {
@@ -816,6 +884,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 16:
                 if (contadorPP < contadorP) {
+                    p = new Ficha("P", 3);
                     addFicha(p, index);
                     contadorPP++;
                 } else {
@@ -824,6 +893,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 17:
                 if (contadorQQ < contadorQ) {
+                    q = new Ficha("Q", 5);
                     addFicha(q, index);
                     contadorQQ++;
                 } else {
@@ -832,6 +902,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 18:
                 if (contadorRR < contadorR) {
+                    r = new Ficha("R", 1);
                     addFicha(r, index);
                     contadorRR++;
                 } else {
@@ -840,6 +911,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 19:
                 if (contadorSS < contadorS) {
+                    s = new Ficha("S", 1);
                     addFicha(s, index);
                     contadorSS++;
                 } else {
@@ -848,6 +920,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 20:
                 if (contadorTT < contadorT) {
+                    t = new Ficha("T", 1);
                     addFicha(t, index);
                     contadorTT++;
                 } else {
@@ -856,6 +929,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 21:
                 if (contadorUU < contadorU) {
+                    u = new Ficha("U", 1);
                     addFicha(u, index);
                     contadorUU++;
                 } else {
@@ -864,6 +938,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 22:
                 if (contadorVV < contadorV) {
+                    v = new Ficha("V", 4);
                     addFicha(v, index);
                     contadorVV++;
                 } else {
@@ -872,6 +947,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 23:
                 if (contadorXX < contadorX) {
+                    x = new Ficha("X", 8);
                     addFicha(x, index);
                     contadorXX++;
                 } else {
@@ -880,6 +956,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 24:
                 if (contadorYY < contadorY) {
+                    y = new Ficha("Y", 4);
                     addFicha(y, index);
                     contadorYY++;
                 } else {
@@ -888,6 +965,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 25:
                 if (contadorZZ < contadorZ) {
+                    z = new Ficha("Z", 10);
                     addFicha(z, index);
                     contadorZZ++;
                 } else {
@@ -901,89 +979,116 @@ public class Principal extends javax.swing.JFrame {
         if (primeraFicha == null) {
             primeraFicha = actual;
             ultimaFicha = actual;
+            asTemp = primeraFicha;
             System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         } else {
             ultimaFicha.siguiente = actual;
-            ultimaFicha = ultimaFicha.siguiente;
+            ultimaFicha = actual;
             ultimaFicha.siguiente = null;
             System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         }
     }
 
     public void llenarNulas(int index) {
+
         if (contadorAA < contadorA) {
+            a = new Ficha("A", 1);
             addFicha(a, index);
             contadorAA++;
         } else if (contadorBB < contadorB) {
+            b = new Ficha("B", 3);
             addFicha(b, index);
             contadorBB++;
         } else if (contadorCC < contadorC) {
+            c = new Ficha("C", 1);
             addFicha(c, index);
             contadorCC++;
         } else if (contadorDD < contadorD) {
+            d = new Ficha("D", 2);
             addFicha(d, index);
             contadorDD++;
         } else if (contadorEE < contadorE) {
+            e = new Ficha("E", 1);
             addFicha(e, index);
             contadorEE++;
         } else if (contadorFF < contadorF) {
+            f = new Ficha("F", 4);
             addFicha(f, index);
             contadorFF++;
         } else if (contadorGG < contadorG) {
+            g = new Ficha("G", 2);
             addFicha(g, index);
             contadorGG++;
         } else if (contadorHH < contadorH) {
+            h = new Ficha("H", 4);
             addFicha(h, index);
             contadorHH++;
         } else if (contadorII < contadorI) {
+            i = new Ficha("I", 1);
             addFicha(i, index);
             contadorII++;
         } else if (contadorJJ < contadorJ) {
+            j = new Ficha("J", 8);
             addFicha(j, index);
             contadorJJ++;
         } else if (contadorLL < contadorL) {
+            l = new Ficha("L", 1);
             addFicha(l, index);
             contadorLL++;
         } else if (contadorMM < contadorM) {
+            m = new Ficha("M", 3);
             addFicha(m, index);
             contadorMM++;
         } else if (contadorNN < contadorN) {
+            n = new Ficha("N", 1);
             addFicha(n, index);
             contadorNN++;
         } else if (contadorNN_ < contadorN_) {
+            n_ = new Ficha("Ñ", 8);
             addFicha(n_, index);
             contadorNN_++;
         } else if (contadorOO < contadorO) {
+            o = new Ficha("O", 1);
             addFicha(o, index);
             contadorOO++;
         } else if (contadorPP < contadorP) {
+            p = new Ficha("P", 3);
             addFicha(p, index);
             contadorPP++;
         } else if (contadorQQ < contadorQ) {
+            q = new Ficha("Q", 5);
             addFicha(q, index);
             contadorQQ++;
         } else if (contadorRR < contadorR) {
+            r = new Ficha("R", 1);
             addFicha(r, index);
             contadorRR++;
         } else if (contadorSS < contadorS) {
+            s = new Ficha("S", 1);
             addFicha(s, index);
             contadorSS++;
         } else if (contadorTT < contadorT) {
+            t = new Ficha("T", 1);
             addFicha(t, index);
             contadorTT++;
         } else if (contadorUU < contadorU) {
+            u = new Ficha("U", 1);
             addFicha(u, index);
             contadorUU++;
         } else if (contadorVV < contadorV) {
+            v = new Ficha("V", 4);
             addFicha(v, index);
             contadorVV++;
         } else if (contadorXX < contadorX) {
+            x = new Ficha("X", 8);
             addFicha(x, index);
             contadorXX++;
         } else if (contadorYY < contadorY) {
+            y = new Ficha("Y", 4);
             addFicha(y, index);
             contadorYY++;
         } else if (contadorZZ < contadorZ) {
+            z = new Ficha("Z", 10);
             addFicha(z, index);
             contadorZZ++;
         }
@@ -991,13 +1096,49 @@ public class Principal extends javax.swing.JFrame {
 
     public void recorrerFichas() {
         int at = 1;
-        Ficha bandera = primeraFicha;
-        while (bandera.siguiente != null) {
-            System.out.println(at + "  - Letra: " + bandera.letra + " Puntos que da: " + bandera.puntos + "  Siguiente: " + bandera.siguiente.letra);
+        Ficha fichaTemp = new Ficha();
+        fichaTemp = primeraFicha;
+        while (fichaTemp != null) {
+            System.out.println(at + "  - Letra: " + fichaTemp.letra + " Puntos que da: " + fichaTemp.puntos);
             at++;
-            bandera = bandera.siguiente;
+            fichaTemp = fichaTemp.siguiente;
         }
         System.out.println("Hay: " + at);
+    }
+    
+    public void retirarFicha(JLabel label){
+    fichaRetirar = primeraFicha;
+    label.setText(fichaRetirar.letra);
+    Ficha fi = new Ficha();
+    fi = primeraFicha.siguiente;
+    primeraFicha = fi;
+    recorrerFichas();
+    }
+    
+    public void asignarALab(){
+    retirarFicha(jLabel12);
+    retirarFicha(jLabel13);
+    retirarFicha(jLabel14);
+    retirarFicha(jLabel15);
+    retirarFicha(jLabel16);
+    retirarFicha(jLabel17);
+    retirarFicha(jLabel18);
+    
+    Ficha che = new Ficha();
+    che = primeraFicha;
+    jCheckBox1.setText(che.letra);
+    che = che.siguiente;
+    jCheckBox2.setText(che.letra);
+    che = che.siguiente;
+    jCheckBox3.setText(che.letra);
+    che = che.siguiente;
+    jCheckBox4.setText(che.letra);
+    che = che.siguiente;
+    jCheckBox5.setText(che.letra);
+    che = che.siguiente;
+    jCheckBox6.setText(che.letra);
+    che = che.siguiente;
+    jCheckBox7.setText(che.letra);
     }
     //Fin metodos de ficha
 
@@ -1129,13 +1270,13 @@ public class Principal extends javax.swing.JFrame {
                     ultimaPosicion = temp;
                     JLabel nu = new JLabel();
                     nu.setBounds(posx, posy, 50, 50);
-                    nu.setText("[Posición]");
+                    nu.setText("");
                     Border border = LineBorder.createGrayLineBorder();
                     nu.setBorder(border);
-                    nu.setVisible(true);
                     nu.addMouseListener(ml);
                     nu.setTransferHandler(new TransferHandler("text"));
                     add(nu);
+                    nu.setVisible(true);
                     System.out.println("Label creado");
                     posx = posx + 55;
                     posy = posy;
@@ -1147,13 +1288,14 @@ public class Principal extends javax.swing.JFrame {
                     ultimaPosicion.derecha = null;
                     JLabel nu = new JLabel();
                     nu.setBounds(posx, posy, 50, 50);
-                    nu.setText("[Posición]");
+                    nu.setText("");
                     Border border = LineBorder.createGrayLineBorder();
                     nu.setBorder(border);
-                    nu.setVisible(true);
+
                     nu.addMouseListener(ml);
                     nu.setTransferHandler(new TransferHandler("text"));
                     add(nu);
+                    nu.setVisible(true);
                     System.out.println("Label creado");
                     posx = posx + 55;
                     posy = posy;
@@ -1164,6 +1306,7 @@ public class Principal extends javax.swing.JFrame {
             posx = 21;
             posy = posy + 55;
         }
+
     }
 
     //Con esto les asigno su arriba abajo y si es el ultimo de la fila que su derecha = null y si es
@@ -1244,9 +1387,9 @@ public class Principal extends javax.swing.JFrame {
                 temp = bandera.derecha;
                 bandera.derecha = null;
                 bandera = temp;
-            }else{
-            bandera = bandera.derecha;
-            } 
+            } else {
+                bandera = bandera.derecha;
+            }
         }
     }
 
@@ -1308,6 +1451,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
@@ -1342,5 +1487,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

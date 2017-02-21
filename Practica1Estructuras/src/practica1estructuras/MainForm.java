@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 
 public class MainForm extends javax.swing.JFrame {
 Principal palabraPrincipal = new Principal();
+
     public MainForm() {
         initComponents();
         setLocationRelativeTo(null);
