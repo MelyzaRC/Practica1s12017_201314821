@@ -20,13 +20,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class MainForm extends javax.swing.JFrame {
-Principal palabraPrincipal = new Principal();
+
+    Principal palabraPrincipal = new Principal();
 
     public MainForm() {
         initComponents();
         setLocationRelativeTo(null);
-        
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -99,7 +99,7 @@ Principal palabraPrincipal = new Principal();
                 Node a = nodo.item(i);
                 Element e = (Element) a;
                 System.out.println("Dimension: " + e.getTextContent());
-                palabraPrincipal.dimension= Integer.parseInt(e.getTextContent());
+                palabraPrincipal.dimension = Integer.parseInt(e.getTextContent());
             }
 
             //Lee las palabras del diccionario
@@ -133,11 +133,12 @@ Principal palabraPrincipal = new Principal();
                     Element posXx = (Element) posX;
                     Node posY = listadoY.item(0);
                     Element posYy = (Element) posY;
-
+                    Bonus bo = new Bonus(Integer.parseInt(posXx.getTextContent()), Integer.parseInt(posYy.getTextContent()), 2);
+                    palabraPrincipal.addBonus(bo);
                     System.out.println("Casilla Doble \n" + "X: " + posXx.getTextContent() + " Y: " + posYy.getTextContent());
                 }
             }
-            
+
             //Lee los triples
             NodeList listadoTriples = doc.getElementsByTagName("triples");
             Node trip = listadoTriples.item(0);
@@ -155,21 +156,34 @@ Principal palabraPrincipal = new Principal();
                     Element posXx = (Element) posX;
                     Node posY = listadoY.item(0);
                     Element posYy = (Element) posY;
-
+                    Bonus bo = new Bonus(Integer.parseInt(posXx.getTextContent()), Integer.parseInt(posYy.getTextContent()), 3);
+                    palabraPrincipal.addBonus(bo);
                     System.out.println("Casilla Triple\n" + "X: " + posXx.getTextContent() + " Y: " + posYy.getTextContent());
                 }
             }
             JOptionPane.showMessageDialog(this, "El archivo ha sido analizado, presione 'JUGAR' \n para iniciar el juego", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
             jButton2.setEnabled(true);
-            
-            
+
         } catch (ParserConfigurationException | SAXException | IOException e) {
             System.out.println("Error");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        palabraPrincipal.setVisible(true); 
+        
+        this.setVisible(false);
+        palabraPrincipal.crearTablero(palabraPrincipal.dimension);
+        palabraPrincipal.asigArriba();
+        palabraPrincipal.asigAbajo();
+        palabraPrincipal.retirarIzquierda();
+        palabraPrincipal.retirarDerecha();
+        palabraPrincipal.recPosicion();
+        palabraPrincipal.asignarBonus();
+        palabraPrincipal.llenarColaFichas();
+        palabraPrincipal.recorrerFichas();
+        palabraPrincipal.setVisible(true);
+        JOptionPane.showMessageDialog(this, "Debe ingresar Jugadores:\n-Menú Opciones\n-Agregar Jugador \n(Ctrl + A)", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

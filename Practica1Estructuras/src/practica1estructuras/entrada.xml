@@ -1,6 +1,6 @@
 <scrabble>
 
-<dimension>8</dimension>
+<dimension>9</dimension>
 
 <dobles>
 <casilla>
@@ -8,19 +8,19 @@
 <y>5</y>
 </casilla>
 <casilla>
-<x>7</x>
-<y>9</y>
+<x>3</x>
+<y>4</y>
 </casilla>
 </dobles>
 
 <triples>
 <casilla>
-<x>20</x>
-<y>20</y>
+<x>1</x>
+<y>2</y>
 </casilla>
 <casilla>
-<x>1</x>
-<y>1</y>
+<x>2</x>
+<y>3</y>
 </casilla>
 </triples>
 
