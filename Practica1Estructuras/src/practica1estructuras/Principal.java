@@ -597,18 +597,16 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+//validarHorizontal();
         devolverFichas();
         recorrerFichas();
         jugadorActual = jugadorActual.siguiente;
         indicarTurno();
         asignarFichasAJugador();
         verEnLabels();
-        //recorrerFichas();
      ArchivoFichasActivas();
        generarImagenFichasActivas();
         imprimirJugadores();
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1690,7 +1688,7 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("Error: " + ex.getMessage());
         }
     }
-
+ 
     public void asignarFichasAJugador() {
 
         for (int asig = 0; asig < 7; asig++) {
@@ -1900,6 +1898,44 @@ public class Principal extends javax.swing.JFrame {
                 new Principal().setVisible(true);
             }
         });
+    }
+    
+    
+    
+    public void validarHorizontal(){
+    Posicion bandera = new Posicion();
+    bandera = primeraPosicion;
+     do{
+     Posicion bandera2 = new Posicion();
+     bandera2 = bandera;
+     String palabra=null;
+     do{ 
+         if(bandera2.contenido.getText() == null){
+             //nada
+         }else{
+         palabra = palabra + bandera2.contenido.getText();
+         }
+         bandera2 = bandera2.derecha;
+     }while(bandera2 != null);
+     
+     Palabra revisar = new Palabra();
+     revisar = primeraPalabra;
+     do{
+         
+         if(revisar.palabra.toLowerCase().equals(palabra.toLowerCase())){
+         JOptionPane.showMessageDialog(null, "Ha formado la palabra: " + palabra);
+         }else{
+             System.out.println("ninguna palabra encontrada");
+         }
+     revisar = revisar.siguiente;
+     }while(revisar != null);
+     
+     
+     
+     
+         bandera = bandera.abajo;
+     }while(bandera != null);
+    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
