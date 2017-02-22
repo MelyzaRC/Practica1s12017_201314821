@@ -698,7 +698,6 @@ public class Principal extends javax.swing.JFrame {
                     posy = posy;
                     temp.contenido = nu;
                 }
-
             }
             posx = 21;
             posy = posy + 40;
@@ -1795,21 +1794,24 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void archivoFichasGeneral() {
+        
         String textArchivo = "digraph imagenFichas{\n";
-
+int inte = 0;
         Ficha bandera = new Ficha();
         bandera = ultimaFicha;
         char a = 34;
         do {
+             
             if (bandera == primeraFicha && bandera == ultimaFicha) {
-                textArchivo = textArchivo + bandera.letra + ";";
+                textArchivo = textArchivo + bandera.letra+String.valueOf(inte) + ";";
             } else if (bandera == ultimaFicha) {
-                textArchivo = textArchivo + a + bandera.letra + a;
+                textArchivo = textArchivo + a + bandera.letra+String.valueOf(inte) + a;
             } else if (bandera == primeraFicha) {
-                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n";
+                textArchivo = textArchivo + "->" + a + bandera.letra +String.valueOf(inte)+ a + ";\n";
             } else {
-                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n" + bandera.letra;
+                textArchivo = textArchivo + "->" + a + bandera.letra+String.valueOf(inte) + a + ";\n" + bandera.letra+String.valueOf(inte);
             }
+            inte++;
             bandera = bandera.anterior;
         } while (bandera != null);
         textArchivo = textArchivo + "}";
@@ -1825,7 +1827,6 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
         }
-
     }
 
     public void generarImagenFichasGeneral() {
