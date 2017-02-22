@@ -331,6 +331,11 @@ public class Principal extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(0, 0, 204));
         jButton6.setText("Cancelar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton5.setForeground(new java.awt.Color(0, 204, 0));
@@ -557,7 +562,7 @@ public class Principal extends javax.swing.JFrame {
             Palabra nueva = new Palabra(nombre.toLowerCase());
             addPalabra(nueva);
             JOptionPane.showMessageDialog(this, "Palabra ingresada con éxito", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
-           
+
             try {
                 generarArchivoPalabras();
                 generarImagenPalabras();
@@ -571,6 +576,7 @@ public class Principal extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (jugarOK) {
             asignarFichasAJugador();
+            recorrerFichas();
             ArchivoFichasActivas();
             generarImagenFichasActivas();
             imprimirJugadores();
@@ -580,9 +586,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        devolverFichas();
+        recorrerFichas();
         jugadorActual = jugadorActual.siguiente;
-        indicarTurno();        // TODO add your handling code here:
+        indicarTurno();
+        asignarFichasAJugador();
+        //recorrerFichas();
+        //ArchivoFichasActivas();
+          //  generarImagenFichasActivas();
+            imprimirJugadores();
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     //Creacion de tablero
     public void crearTablero(int dimension) {
@@ -661,7 +680,7 @@ public class Principal extends javax.swing.JFrame {
 
         }
     }
- 
+
     public void asigAbajo() {
         Posicion bandera = new Posicion();
         bandera = primeraPosicion;
@@ -770,7 +789,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     //Fin creacion de tablero
-    
+
     //Metodos de jugador
     public void addJugador(Jugador actual) {
         if (primeroJugador == null) {
@@ -894,31 +913,35 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void asignarFichasAJugador() {
-        Jugador paraAsignar = new Jugador();
-        paraAsignar = jugadorActual;
-                    for (int asig = 0; asig < 7; asig++) {
-                        fichaRetirar = primeraFicha;
-                        if (paraAsignar.primera == null) {
-                            Ficha fi = new Ficha();
-                            fi = primeraFicha.siguiente;
-                            paraAsignar.primera = fichaRetirar;
-                            paraAsignar.ultima = fichaRetirar;
+        
+        for (int asig = 0; asig < 7; asig++) {
+            
+            if (jugadorActual.primera == null) {
+                Ficha fi = new Ficha();
+                fi = primeraFicha.siguiente;
+                jugadorActual.primera = primeraFicha;
+                jugadorActual.ultima = primeraFicha;
 
-                            primeraFicha = fi;
-                        } else {
-                            Ficha fi = new Ficha();
-                            fi = primeraFicha.siguiente;
-                            paraAsignar.ultima.siguiente = fichaRetirar;
-                            paraAsignar.ultima = fichaRetirar;
-                            paraAsignar.ultima.siguiente = null;
-                            primeraFicha = fi;
-                        }
-                    }
+                primeraFicha = fi;
+                primeraFicha.siguiente = fi.siguiente;
+                primeraFicha.anterior = null;
+            } else {
+                Ficha fi = new Ficha();
+                fi = primeraFicha.siguiente;
+                fichaRetirar.anterior = jugadorActual.ultima;
+                jugadorActual.ultima.siguiente = primeraFicha;
+                jugadorActual.ultima = primeraFicha;
+                jugadorActual.ultima.siguiente = null;
+                primeraFicha = fi;
+                primeraFicha.siguiente = fi.siguiente;
+                primeraFicha.anterior = null;
+            }
+        } 
 
     }
 
-    public void generarImagenFichasActivas(){
-     try {
+    public void generarImagenFichasActivas() {
+        try {
             String dotPath = "C:\\release\\bin\\dot.exe";
             String fileInputPath = "C:\\release\\Estructuras\\archivoJugadorFichas.txt";
             String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichasActivas.png";
@@ -937,24 +960,24 @@ public class Principal extends javax.swing.JFrame {
         } finally {
         }
     }
-    
-    public void ArchivoFichasActivas(){
-    String textArchivo = "digraph imagenFichasActivas{\n";
+
+    public void ArchivoFichasActivas() {
+        String textArchivo = "digraph imagenFichasActivas{\n";
 
         Ficha bandera = new Ficha();
-        bandera = jugadorActual.primera;
+        bandera = jugadorActual.ultima;
 
         do {
             if (bandera == jugadorActual.primera && bandera == jugadorActual.ultima) {
                 textArchivo = textArchivo + bandera.letra + ";";
-            } else if (bandera == jugadorActual.primera) {
-                textArchivo = textArchivo + bandera.letra;
             } else if (bandera == jugadorActual.ultima) {
+                textArchivo = textArchivo + bandera.letra;
+            } else if (bandera == jugadorActual.primera) {
                 textArchivo = textArchivo + "->" + bandera.letra + ";\n";
             } else {
                 textArchivo = textArchivo + "->" + bandera.letra + ";\n" + bandera.letra;
             }
-            bandera = bandera.siguiente;
+            bandera = bandera.anterior;
         } while (bandera != null);
         textArchivo = textArchivo + "}";
 
@@ -971,7 +994,62 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }
-    
+
+    public void archivoFichasGeneral() {
+        String textArchivo = "digraph imagenFichas{\n";
+
+        Ficha bandera = new Ficha();
+        bandera = ultimaFicha;
+        char a = 34;
+        do {
+            if (bandera == primeraFicha && bandera == ultimaFicha) {
+                textArchivo = textArchivo + bandera.letra + ";";
+            } else if (bandera == ultimaFicha) {
+                textArchivo = textArchivo + a + bandera.letra + a;
+            } else if (bandera == primeraFicha) {
+                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n";
+            } else {
+                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n" + bandera.letra;
+            }
+            bandera = bandera.anterior;
+        } while (bandera != null);
+        textArchivo = textArchivo + "}";
+
+        try {
+            File archivo = new File("C:\\release\\Estructuras\\archivoFichas.txt");
+            if (archivo.exists()) {
+                archivo.delete();
+            }
+            FileWriter escribir = new FileWriter(archivo, true);
+            escribir.write(textArchivo);
+            escribir.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        }
+
+    }
+
+    public void generarImagenFichasGeneral() {
+        try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\release\\Estructuras\\archivoFichas.txt";
+            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichas.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        } finally {
+        }
+    }
+
     public void imprimirJugadores() {
         Jugador bandera = new Jugador();
         bandera = primeroJugador;
@@ -1016,6 +1094,19 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
+    }
+    
+    public void devolverFichas(){
+    Ficha fichaDevolver = new Ficha();
+    fichaDevolver =jugadorActual.primera;
+     
+    while(fichaDevolver != jugadorActual.ultima.siguiente){
+    addFicha(fichaDevolver,0);
+    fichaDevolver = fichaDevolver.siguiente;
+    }
+    jugadorActual.primera = null;
+    jugadorActual.ultima = null;
+    
     }
 
     //fin metodos de jugador
@@ -1268,7 +1359,7 @@ public class Principal extends javax.swing.JFrame {
         } else {
             ultimaFicha.siguiente = actual;
             ultimaFicha = actual;
-            ultimaFicha.siguiente = null;
+            //ultimaFicha.siguiente = null;
             System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         }
     }
@@ -1550,8 +1641,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     //Fin metodos de palabra 
-   
-
     /**
      * @param args the command line arguments
      */
