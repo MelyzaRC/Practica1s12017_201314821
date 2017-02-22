@@ -188,7 +188,10 @@ public class MainForm extends javax.swing.JFrame {
         palabraPrincipal.recorrerFichas();
         palabraPrincipal.archivoFichasGeneral();
         palabraPrincipal.generarImagenFichasGeneral();
+        palabraPrincipal.generarArchivoPalabras();
+        palabraPrincipal.generarImagenPalabras();
         palabraPrincipal.ArchivoMatrizOrtogonal();
+        palabraPrincipal.generarImagenOrtogonal();
         palabraPrincipal.setVisible(true);
         JOptionPane.showMessageDialog(this, "Debe ingresar Jugadores:\n-Menú Opciones\n-Agregar Jugador \n(Ctrl + A)", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
 

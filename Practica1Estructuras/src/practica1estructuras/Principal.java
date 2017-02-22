@@ -207,6 +207,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -428,6 +429,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Refrescar Reportes");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Ayuda");
@@ -605,6 +615,46 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try{
+         cargarImagenPantallaPalabras();
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+         try{
+        
+        cargarImagenFichasActivas();
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+         
+          try{
+        
+         cargarImagenMatriz();
+        
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+          
+           try{
+        cargarImagenPantalla();
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+           
+            try{
+        cargarImagenFichasGeneral();
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+        
+        
+       
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     //Creacion de tablero
     public void crearTablero(int dimension) {
         int posx = 21;
@@ -616,7 +666,7 @@ public class Principal extends javax.swing.JFrame {
                     primeraPosicion = temp;
                     ultimaPosicion = temp;
                     JLabel nu = new JLabel();
-                    nu.setBounds(posx, posy, 50, 50);
+                    nu.setBounds(posx, posy, 35, 35);
                     nu.setText("");
                     Border border = LineBorder.createGrayLineBorder();
                     nu.setBorder(border);
@@ -625,7 +675,7 @@ public class Principal extends javax.swing.JFrame {
                     add(nu);
                     nu.setVisible(true);
                     System.out.println("Label creado");
-                    posx = posx + 55;
+                    posx = posx + 40;
                     posy = posy;
                     temp.contenido = nu;
                 } else {
@@ -634,7 +684,7 @@ public class Principal extends javax.swing.JFrame {
                     ultimaPosicion = temp;
                     ultimaPosicion.derecha = null;
                     JLabel nu = new JLabel();
-                    nu.setBounds(posx, posy, 50, 50);
+                    nu.setBounds(posx, posy, 35, 35);
                     nu.setText("");
                     Border border = LineBorder.createGrayLineBorder();
                     nu.setBorder(border);
@@ -644,14 +694,14 @@ public class Principal extends javax.swing.JFrame {
                     add(nu);
                     nu.setVisible(true);
                     System.out.println("Label creado");
-                    posx = posx + 55;
+                    posx = posx + 40;
                     posy = posy;
                     temp.contenido = nu;
                 }
 
             }
             posx = 21;
-            posy = posy + 55;
+            posy = posy + 40;
         }
 
     }
@@ -792,128 +842,6 @@ public class Principal extends javax.swing.JFrame {
     }
     //Fin creacion de tablero
 
-    public void ArchivoMatrizOrtogonal() {
-        String textArchivo = "digraph imagenPalabras{\n";
-
-        Posicion bandera = new Posicion();
-        bandera = ultimaPosicion;
-        do{
-            Posicion bandera2 = new Posicion();
-            bandera2 = bandera;
-            
-            do{
-                 String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
-            
-            
-                if(bandera2.abajo == null){
-                textArchivo = textArchivo + cosa + "->";
-                }else if(bandera2.arriba == null){
-                textArchivo = textArchivo + cosa + ";\n";
-                }else{
-                textArchivo = textArchivo + cosa+";\n"+cosa+"->";
-                }
-                
-            bandera2 = bandera2.arriba;
-            }while(bandera2 != null);
-            
-        bandera = bandera.izquierda;
-        }while(bandera != null);
-        
-        
-        
-        
-        
-        
-        
-        
-        bandera = primeraPosicion;
-        
-        do{
-        Posicion bandera2 = new Posicion();
-        bandera2 = bandera;
-        
-        do{
-            String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
-                if(bandera2.arriba == null){
-                textArchivo = textArchivo + cosa + "->";
-                }else if(bandera2.abajo == null){
-                textArchivo = textArchivo + cosa+";";
-                }else{
-                textArchivo = textArchivo + cosa + ";\n"+cosa+"->";
-                }
-        bandera2= bandera2.abajo; 
-        }while(bandera2 != null);
-        
-            bandera = bandera.derecha;
-        }while(bandera != null);
-        
-          
-        bandera = primeraPosicion;
-
-        do {
-            Posicion bandera2 = new Posicion();
-            bandera2 = bandera;
-//Primero creo los de la derecha
-            do {
-
-                String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
-                if (bandera2.derecha != null) {
-                    if (bandera2 == bandera) {
-                        textArchivo = textArchivo + cosa;
-
-                    } else {
-                        textArchivo = textArchivo + "->" + cosa + ";\n" + cosa;
-                    }
-
-                } else {
-                    textArchivo = textArchivo + "->" + cosa + ";";
-                }
-                bandera2 = bandera2.derecha;
-            } while (bandera2 != null);
-
-            bandera = bandera.abajo;
-        } while (bandera != null);
-
-        bandera = ultimaPosicion;
-        //ahora asigno los de la izquierda
-        do {
-            Posicion ps = new Posicion();
-            ps = bandera;
-            
-
-            do {
-                String cosa = "Pos" + String.valueOf(ps.fila) + String.valueOf(ps.columna) + String.valueOf(ps.fila);
-                if (ps.izquierda == null) {
-                    textArchivo = textArchivo + cosa + ";";
-                }else if(ps.derecha == null){
-                textArchivo = textArchivo + cosa + "->";
-                } 
-                else {
-                    textArchivo = textArchivo + cosa + ";\n" + cosa + "->";
-                }
-                ps = ps.izquierda;
-            } while (ps != null);
-
-            bandera = bandera.arriba;
-        } while (bandera != null);
-      
-
-        textArchivo = textArchivo + "}";
-
-        try {
-            File archivo = new File("C:\\release\\Estructuras\\archivoMatriz.txt");
-            if (archivo.exists()) {
-                archivo.delete();
-            }
-            FileWriter escribir = new FileWriter(archivo, true);
-            escribir.write(textArchivo);
-            escribir.close();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
-        }
-
-    }
-
     //Metodos de jugador
     public void addJugador(Jugador actual) {
         if (primeroJugador == null) {
@@ -1036,144 +964,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
-    public void asignarFichasAJugador() {
-
-        for (int asig = 0; asig < 7; asig++) {
-
-            if (jugadorActual.primera == null) {
-                Ficha fi = new Ficha();
-                fi = primeraFicha.siguiente;
-                jugadorActual.primera = primeraFicha;
-                jugadorActual.ultima = primeraFicha;
-
-                primeraFicha = fi;
-                primeraFicha.siguiente = fi.siguiente;
-                primeraFicha.anterior = null;
-            } else {
-                Ficha fi = new Ficha();
-                fi = primeraFicha.siguiente;
-                fichaRetirar.anterior = jugadorActual.ultima;
-                jugadorActual.ultima.siguiente = primeraFicha;
-                jugadorActual.ultima = primeraFicha;
-                jugadorActual.ultima.siguiente = null;
-                primeraFicha = fi;
-                primeraFicha.siguiente = fi.siguiente;
-                primeraFicha.anterior = null;
-            }
-        }
-
-    }
-
-    public void generarImagenFichasActivas() {
-        try {
-            String dotPath = "C:\\release\\bin\\dot.exe";
-            String fileInputPath = "C:\\release\\Estructuras\\archivoJugadorFichas.txt";
-            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichasActivas.png";
-            String tParam = "-Tjpg";
-            String tOParam = "-o";
-            String[] cmd = new String[5];
-            cmd[0] = dotPath;
-            cmd[1] = tParam;
-            cmd[2] = fileInputPath;
-            cmd[3] = tOParam;
-            cmd[4] = fileOutputPath;
-            Runtime rt = Runtime.getRuntime();
-            rt.exec(cmd);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
-        } finally {
-        }
-    }
-
-    public void ArchivoFichasActivas() {
-        String textArchivo = "digraph imagenFichasActivas{\n";
-
-        Ficha bandera = new Ficha();
-        bandera = jugadorActual.ultima;
-
-        do {
-            if (bandera == jugadorActual.primera && bandera == jugadorActual.ultima) {
-                textArchivo = textArchivo + bandera.letra + ";";
-            } else if (bandera == jugadorActual.ultima) {
-                textArchivo = textArchivo + bandera.letra;
-            } else if (bandera == jugadorActual.primera) {
-                textArchivo = textArchivo + "->" + bandera.letra + ";\n";
-            } else {
-                textArchivo = textArchivo + "->" + bandera.letra + ";\n" + bandera.letra;
-            }
-            bandera = bandera.anterior;
-        } while (bandera != null);
-        textArchivo = textArchivo + "}";
-
-        try {
-            File archivo = new File("C:\\release\\Estructuras\\archivoJugadorFichas.txt");
-            if (archivo.exists()) {
-                archivo.delete();
-            }
-            FileWriter escribir = new FileWriter(archivo, true);
-            escribir.write(textArchivo);
-            escribir.close();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
-        }
-
-    }
-
-    public void archivoFichasGeneral() {
-        String textArchivo = "digraph imagenFichas{\n";
-
-        Ficha bandera = new Ficha();
-        bandera = ultimaFicha;
-        char a = 34;
-        do {
-            if (bandera == primeraFicha && bandera == ultimaFicha) {
-                textArchivo = textArchivo + bandera.letra + ";";
-            } else if (bandera == ultimaFicha) {
-                textArchivo = textArchivo + a + bandera.letra + a;
-            } else if (bandera == primeraFicha) {
-                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n";
-            } else {
-                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n" + bandera.letra;
-            }
-            bandera = bandera.anterior;
-        } while (bandera != null);
-        textArchivo = textArchivo + "}";
-
-        try {
-            File archivo = new File("C:\\release\\Estructuras\\archivoFichas.txt");
-            if (archivo.exists()) {
-                archivo.delete();
-            }
-            FileWriter escribir = new FileWriter(archivo, true);
-            escribir.write(textArchivo);
-            escribir.close();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
-        }
-
-    }
-
-    public void generarImagenFichasGeneral() {
-        try {
-            String dotPath = "C:\\release\\bin\\dot.exe";
-            String fileInputPath = "C:\\release\\Estructuras\\archivoFichas.txt";
-            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichas.png";
-            String tParam = "-Tjpg";
-            String tOParam = "-o";
-            String[] cmd = new String[5];
-            cmd[0] = dotPath;
-            cmd[1] = tParam;
-            cmd[2] = fileInputPath;
-            cmd[3] = tOParam;
-            cmd[4] = fileOutputPath;
-            Runtime rt = Runtime.getRuntime();
-            rt.exec(cmd);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
-        } finally {
-        }
-    }
-
     public void imprimirJugadores() {
         Jugador bandera = new Jugador();
         bandera = primeroJugador;
@@ -1206,17 +996,6 @@ public class Principal extends javax.swing.JFrame {
                 bandera = bandera.siguiente;
             }
 
-        }
-    }
-
-    public void cargarImagenPantalla() {
-        try {
-            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenJugador.png"));
-            Image imagen = icono.getImage();
-            ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
-            jLabel7.setIcon(iconoEscalado);
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex.getMessage());
         }
     }
 
@@ -1513,6 +1292,7 @@ public class Principal extends javax.swing.JFrame {
             asTemp = primeraFicha;
             System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         } else {
+            actual.anterior= ultimaFicha;
             ultimaFicha.siguiente = actual;
             ultimaFicha = actual;
             //ultimaFicha.siguiente = null;
@@ -1654,6 +1434,8 @@ public class Principal extends javax.swing.JFrame {
             ultimaPalabra.siguiente = nuevaPalabra;
             ultimaPalabra = nuevaPalabra;
             ultimaPalabra.siguiente = null;
+            generarArchivoPalabras();
+           generarImagenPalabras();
             System.out.println("Agregada: " + nuevaPalabra.palabra);
         } else {
             System.out.println("Palabra Repetida");
@@ -1704,6 +1486,12 @@ public class Principal extends javax.swing.JFrame {
             bandera = bandera.siguiente;
         }
     }
+    //Fin metodos de palabra 
+    
+    
+    
+    
+    
 
     public void generarArchivoPalabras() {
         String textArchivo = "digraph imagenPalabras{\n";
@@ -1770,7 +1558,320 @@ public class Principal extends javax.swing.JFrame {
         }
     }
 
-    //Fin metodos de palabra 
+    public void ArchivoMatrizOrtogonal() {
+        String textArchivo = "digraph imagenPalabras{\n";
+
+        Posicion bandera = new Posicion();
+        bandera = ultimaPosicion;
+        do {
+            Posicion bandera2 = new Posicion();
+            bandera2 = bandera;
+
+            do {
+                String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
+
+                if (bandera2.abajo == null) {
+                    textArchivo = textArchivo + cosa + "->";
+                } else if (bandera2.arriba == null) {
+                    textArchivo = textArchivo + cosa + ";\n";
+                } else {
+                    textArchivo = textArchivo + cosa + ";\n" + cosa + "->";
+                }
+
+                bandera2 = bandera2.arriba;
+            } while (bandera2 != null);
+
+            bandera = bandera.izquierda;
+        } while (bandera != null);
+
+        bandera = primeraPosicion;
+
+        do {
+            Posicion bandera2 = new Posicion();
+            bandera2 = bandera;
+
+            do {
+                String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
+                if (bandera2.arriba == null) {
+                    textArchivo = textArchivo + cosa + "->";
+                } else if (bandera2.abajo == null) {
+                    textArchivo = textArchivo + cosa + ";";
+                } else {
+                    textArchivo = textArchivo + cosa + ";\n" + cosa + "->";
+                }
+                bandera2 = bandera2.abajo;
+            } while (bandera2 != null);
+
+            bandera = bandera.derecha;
+        } while (bandera != null);
+
+        bandera = primeraPosicion;
+
+        do {
+            Posicion bandera2 = new Posicion();
+            bandera2 = bandera;
+//Primero creo los de la derecha
+            do {
+
+                String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
+                if (bandera2.derecha != null) {
+                    if (bandera2 == bandera) {
+                        textArchivo = textArchivo + cosa;
+
+                    } else {
+                        textArchivo = textArchivo + "->" + cosa + ";\n" + cosa;
+                    }
+
+                } else {
+                    textArchivo = textArchivo + "->" + cosa + ";";
+                }
+                bandera2 = bandera2.derecha;
+            } while (bandera2 != null);
+
+            bandera = bandera.abajo;
+        } while (bandera != null);
+
+        bandera = ultimaPosicion;
+        //ahora asigno los de la izquierda
+        do {
+            Posicion ps = new Posicion();
+            ps = bandera;
+
+            do {
+                String cosa = "Pos" + String.valueOf(ps.fila) + String.valueOf(ps.columna) + String.valueOf(ps.fila);
+                if (ps.izquierda == null) {
+                    textArchivo = textArchivo + cosa + ";";
+                } else if (ps.derecha == null) {
+                    textArchivo = textArchivo + cosa + "->";
+                } else {
+                    textArchivo = textArchivo + cosa + ";\n" + cosa + "->";
+                }
+                ps = ps.izquierda;
+            } while (ps != null);
+
+            bandera = bandera.arriba;
+        } while (bandera != null);
+
+        textArchivo = textArchivo + "}";
+
+        try {
+            File archivo = new File("C:\\release\\Estructuras\\archivoMatriz.txt");
+            if (archivo.exists()) {
+                archivo.delete();
+            }
+            FileWriter escribir = new FileWriter(archivo, true);
+            escribir.write(textArchivo);
+            escribir.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        }
+
+    }
+
+    public void generarImagenOrtogonal() {
+        try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\release\\Estructuras\\archivoMatriz.txt";
+            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenOrtogonal.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        } finally {
+        }
+    }
+
+    public void cargarImagenMatriz() {
+        try {
+            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenOrtogonal.png"));
+            Image imagen = icono.getImage();
+            ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
+            jLabel5.setIcon(iconoEscalado);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+
+    public void asignarFichasAJugador() {
+
+        for (int asig = 0; asig < 7; asig++) {
+
+            if (jugadorActual.primera == null) {
+                Ficha fi = new Ficha();
+                fi = primeraFicha.siguiente;
+                jugadorActual.primera = primeraFicha;
+                jugadorActual.ultima = primeraFicha;
+
+                primeraFicha = fi;
+                primeraFicha.siguiente = fi.siguiente;
+                primeraFicha.anterior = null;
+            } else {
+                Ficha fi = new Ficha();
+                fi = primeraFicha.siguiente;
+                fichaRetirar.anterior = jugadorActual.ultima;
+                jugadorActual.ultima.siguiente = primeraFicha;
+                jugadorActual.ultima = primeraFicha;
+                jugadorActual.ultima.siguiente = null;
+                primeraFicha = fi;
+                primeraFicha.siguiente = fi.siguiente;
+                primeraFicha.anterior = null;
+            }
+        }
+
+    }
+
+    public void generarImagenFichasActivas() {
+        try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\release\\Estructuras\\archivoJugadorFichas.txt";
+            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichasActivas.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        } finally {
+        }
+    }
+    
+    public void cargarImagenFichasActivas(){
+     try {
+            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenFichasActivas.png"));
+            Image imagen = icono.getImage();
+            ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
+            jLabel4.setIcon(iconoEscalado);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+
+    public void ArchivoFichasActivas() {
+        String textArchivo = "digraph imagenFichasActivas{\n";
+
+        Ficha bandera = new Ficha();
+        bandera = jugadorActual.primera;
+
+        do {
+            if (bandera == jugadorActual.primera && bandera == jugadorActual.ultima) {
+                textArchivo = textArchivo + bandera.letra + ";";
+            } else if (bandera == jugadorActual.primera) {
+                textArchivo = textArchivo + bandera.letra+"->";
+            } else if (bandera == jugadorActual.ultima) {
+                textArchivo = textArchivo+ bandera.letra + ";\n";
+            } else {
+                textArchivo = textArchivo + bandera.letra + ";\n" + bandera.letra+ "->" ;
+            }
+            bandera = bandera.siguiente;
+        } while (bandera != null);
+        textArchivo = textArchivo + "}";
+
+        try {
+            File archivo = new File("C:\\release\\Estructuras\\archivoJugadorFichas.txt");
+            if (archivo.exists()) {
+                archivo.delete();
+            }
+            FileWriter escribir = new FileWriter(archivo, true);
+            escribir.write(textArchivo);
+            escribir.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        }
+
+    }
+
+    public void archivoFichasGeneral() {
+        String textArchivo = "digraph imagenFichas{\n";
+
+        Ficha bandera = new Ficha();
+        bandera = ultimaFicha;
+        char a = 34;
+        do {
+            if (bandera == primeraFicha && bandera == ultimaFicha) {
+                textArchivo = textArchivo + bandera.letra + ";";
+            } else if (bandera == ultimaFicha) {
+                textArchivo = textArchivo + a + bandera.letra + a;
+            } else if (bandera == primeraFicha) {
+                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n";
+            } else {
+                textArchivo = textArchivo + "->" + a + bandera.letra + a + ";\n" + bandera.letra;
+            }
+            bandera = bandera.anterior;
+        } while (bandera != null);
+        textArchivo = textArchivo + "}";
+
+        try {
+            File archivo = new File("C:\\release\\Estructuras\\archivoFichas.txt");
+            if (archivo.exists()) {
+                archivo.delete();
+            }
+            FileWriter escribir = new FileWriter(archivo, true);
+            escribir.write(textArchivo);
+            escribir.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        }
+
+    }
+
+    public void generarImagenFichasGeneral() {
+        try {
+            String dotPath = "C:\\release\\bin\\dot.exe";
+            String fileInputPath = "C:\\release\\Estructuras\\archivoFichas.txt";
+            String fileOutputPath = "C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichas.png";
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(cmd);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        } finally {
+        }
+    }
+    
+    public void cargarImagenFichasGeneral(){
+     try {
+            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenFichas.png"));
+            Image imagen = icono.getImage();
+            ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
+            jLabel6.setIcon(iconoEscalado);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    
+    }
+
+    public void cargarImagenPantalla() {
+        try {
+            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenJugador.png"));
+            Image imagen = icono.getImage();
+            ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
+            jLabel7.setIcon(iconoEscalado);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -1844,6 +1945,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
