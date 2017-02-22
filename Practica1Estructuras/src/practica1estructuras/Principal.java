@@ -596,8 +596,8 @@ public class Principal extends javax.swing.JFrame {
         verEnLabels();
         //recorrerFichas();
         //ArchivoFichasActivas();
-          //  generarImagenFichasActivas();
-            imprimirJugadores();
+        //  generarImagenFichasActivas();
+        imprimirJugadores();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -792,6 +792,102 @@ public class Principal extends javax.swing.JFrame {
     }
     //Fin creacion de tablero
 
+    public void ArchivoMatrizOrtogonal() {
+        String textArchivo = "digraph imagenPalabras{\n";
+
+        Posicion bandera = new Posicion();
+        bandera = primeraPosicion;
+        
+        do{
+        Posicion bandera2 = new Posicion();
+        bandera2 = bandera;
+        
+        do{
+            String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
+                if(bandera2.arriba == null){
+                textArchivo = textArchivo + cosa + "->";
+                }else if(bandera2.abajo == null){
+                textArchivo = textArchivo + cosa+";";
+                }else{
+                textArchivo = textArchivo + cosa + ";\n"+cosa+"->";
+                }
+        bandera2= bandera2.abajo; 
+        }while(bandera2 != null);
+        
+            bandera = bandera.derecha;
+        }while(bandera != null);
+        
+        
+        
+        
+        
+        
+        
+        bandera = primeraPosicion;
+
+        do {
+            Posicion bandera2 = new Posicion();
+            bandera2 = bandera;
+//Primero creo los de la derecha
+            do {
+
+                String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
+                if (bandera2.derecha != null) {
+                    if (bandera2 == bandera) {
+                        textArchivo = textArchivo + cosa;
+
+                    } else {
+                        textArchivo = textArchivo + "->" + cosa + ";\n" + cosa;
+                    }
+
+                } else {
+                    textArchivo = textArchivo + "->" + cosa + ";";
+                }
+                bandera2 = bandera2.derecha;
+            } while (bandera2 != null);
+
+            bandera = bandera.abajo;
+        } while (bandera != null);
+
+        bandera = ultimaPosicion;
+        //ahora asigno los de la izquierda
+        do {
+            Posicion ps = new Posicion();
+            ps = bandera;
+            
+
+            do {
+                String cosa = "Pos" + String.valueOf(ps.fila) + String.valueOf(ps.columna) + String.valueOf(ps.fila);
+                if (ps.izquierda == null) {
+                    textArchivo = textArchivo + cosa + ";";
+                }else if(ps.derecha == null){
+                textArchivo = textArchivo + cosa + "->";
+                } 
+                else {
+                    textArchivo = textArchivo + cosa + ";\n" + cosa + "->";
+                }
+                ps = ps.izquierda;
+            } while (ps != null);
+
+            bandera = bandera.arriba;
+        } while (bandera != null);
+
+        textArchivo = textArchivo + "}";
+
+        try {
+            File archivo = new File("C:\\release\\Estructuras\\archivoMatriz.txt");
+            if (archivo.exists()) {
+                archivo.delete();
+            }
+            FileWriter escribir = new FileWriter(archivo, true);
+            escribir.write(textArchivo);
+            escribir.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Scrabble dice: " + ex.getMessage());
+        }
+
+    }
+
     //Metodos de jugador
     public void addJugador(Jugador actual) {
         if (primeroJugador == null) {
@@ -915,9 +1011,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void asignarFichasAJugador() {
-        
+
         for (int asig = 0; asig < 7; asig++) {
-            
+
             if (jugadorActual.primera == null) {
                 Ficha fi = new Ficha();
                 fi = primeraFicha.siguiente;
@@ -938,7 +1034,7 @@ public class Principal extends javax.swing.JFrame {
                 primeraFicha.siguiente = fi.siguiente;
                 primeraFicha.anterior = null;
             }
-        } 
+        }
 
     }
 
@@ -1097,52 +1193,52 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("Error: " + ex.getMessage());
         }
     }
-    
-    public void devolverFichas(){
-    Ficha fichaDevolver = new Ficha();
-    fichaDevolver =jugadorActual.primera;
-     
-    while(fichaDevolver != jugadorActual.ultima.siguiente){
-    addFicha(fichaDevolver,0);
-    fichaDevolver = fichaDevolver.siguiente;
+
+    public void devolverFichas() {
+        Ficha fichaDevolver = new Ficha();
+        fichaDevolver = jugadorActual.primera;
+
+        while (fichaDevolver != jugadorActual.ultima.siguiente) {
+            addFicha(fichaDevolver, 0);
+            fichaDevolver = fichaDevolver.siguiente;
+        }
+        jugadorActual.primera = null;
+        jugadorActual.ultima = null;
+
     }
-    jugadorActual.primera = null;
-    jugadorActual.ultima = null;
-    
+
+    public void verEnLabels() {
+        try {
+            jLabel12.setText(jugadorActual.primera.letra);
+
+            jLabel13.setText(jugadorActual.primera.siguiente.letra);
+            jLabel14.setText(jugadorActual.primera.siguiente.siguiente.letra);
+            jLabel15.setText(jugadorActual.primera.siguiente.siguiente.siguiente.letra);
+            jLabel16.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.letra);
+            jLabel17.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.siguiente.letra);
+            jLabel18.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.siguiente.siguiente.letra);
+
+            Ficha che = new Ficha();
+            che = jugadorActual.primera;
+            jCheckBox1.setText(che.letra);
+            che = che.siguiente;
+            jCheckBox2.setText(che.letra);
+            che = che.siguiente;
+            jCheckBox3.setText(che.letra);
+            che = che.siguiente;
+            jCheckBox4.setText(che.letra);
+            che = che.siguiente;
+            jCheckBox5.setText(che.letra);
+            che = che.siguiente;
+            jCheckBox6.setText(che.letra);
+            che = che.siguiente;
+            jCheckBox7.setText(che.letra);
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
     }
-     
-    public void verEnLabels(){
-    try{
-    jLabel12.setText(jugadorActual.primera.letra);
-    
-    jLabel13.setText(jugadorActual.primera.siguiente.letra);
-    jLabel14.setText(jugadorActual.primera.siguiente.siguiente.letra);
-    jLabel15.setText(jugadorActual.primera.siguiente.siguiente.siguiente.letra);
-    jLabel16.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.letra);
-    jLabel17.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.siguiente.letra);
-    jLabel18.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.siguiente.siguiente.letra);
-    
-    
-    Ficha che = new Ficha();
-        che = jugadorActual.primera;
-        jCheckBox1.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox2.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox3.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox4.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox5.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox6.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox7.setText(che.letra);
-        
-    }catch(Exception ex){
-        System.out.println("Error: " + ex.getMessage());
-    }
-    }
+
     //fin metodos de jugador
     //Metodos de ficha
     public void llenarColaFichas() {
@@ -1151,7 +1247,7 @@ public class Principal extends javax.swing.JFrame {
             valuarFicha(counter);
         }
     }
-    
+
     public void valuarFicha(int index) {
 
         int numero = (int) (Math.random() * 25) + 1;
