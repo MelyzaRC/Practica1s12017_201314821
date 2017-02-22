@@ -576,6 +576,7 @@ public class Principal extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (jugarOK) {
             asignarFichasAJugador();
+            verEnLabels();
             recorrerFichas();
             ArchivoFichasActivas();
             generarImagenFichasActivas();
@@ -592,6 +593,7 @@ public class Principal extends javax.swing.JFrame {
         jugadorActual = jugadorActual.siguiente;
         indicarTurno();
         asignarFichasAJugador();
+        verEnLabels();
         //recorrerFichas();
         //ArchivoFichasActivas();
           //  generarImagenFichasActivas();
@@ -1108,7 +1110,39 @@ public class Principal extends javax.swing.JFrame {
     jugadorActual.ultima = null;
     
     }
-
+     
+    public void verEnLabels(){
+    try{
+    jLabel12.setText(jugadorActual.primera.letra);
+    
+    jLabel13.setText(jugadorActual.primera.siguiente.letra);
+    jLabel14.setText(jugadorActual.primera.siguiente.siguiente.letra);
+    jLabel15.setText(jugadorActual.primera.siguiente.siguiente.siguiente.letra);
+    jLabel16.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.letra);
+    jLabel17.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.siguiente.letra);
+    jLabel18.setText(jugadorActual.primera.siguiente.siguiente.siguiente.siguiente.siguiente.siguiente.letra);
+    
+    
+    Ficha che = new Ficha();
+        che = jugadorActual.primera;
+        jCheckBox1.setText(che.letra);
+        che = che.siguiente;
+        jCheckBox2.setText(che.letra);
+        che = che.siguiente;
+        jCheckBox3.setText(che.letra);
+        che = che.siguiente;
+        jCheckBox4.setText(che.letra);
+        che = che.siguiente;
+        jCheckBox5.setText(che.letra);
+        che = che.siguiente;
+        jCheckBox6.setText(che.letra);
+        che = che.siguiente;
+        jCheckBox7.setText(che.letra);
+        
+    }catch(Exception ex){
+        System.out.println("Error: " + ex.getMessage());
+    }
+    }
     //fin metodos de jugador
     //Metodos de ficha
     public void llenarColaFichas() {
@@ -1117,7 +1151,7 @@ public class Principal extends javax.swing.JFrame {
             valuarFicha(counter);
         }
     }
-
+    
     public void valuarFicha(int index) {
 
         int numero = (int) (Math.random() * 25) + 1;
@@ -1487,32 +1521,6 @@ public class Principal extends javax.swing.JFrame {
         fi = primeraFicha.siguiente;
         primeraFicha = fi;
         recorrerFichas();
-    }
-
-    public void asignarALab() {
-        retirarFicha(jLabel12);
-        retirarFicha(jLabel13);
-        retirarFicha(jLabel14);
-        retirarFicha(jLabel15);
-        retirarFicha(jLabel16);
-        retirarFicha(jLabel17);
-        retirarFicha(jLabel18);
-
-        Ficha che = new Ficha();
-        che = primeraFicha;
-        jCheckBox1.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox2.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox3.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox4.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox5.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox6.setText(che.letra);
-        che = che.siguiente;
-        jCheckBox7.setText(che.letra);
     }
 
     //Fin metodos de ficha

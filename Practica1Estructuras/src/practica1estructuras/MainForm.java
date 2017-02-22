@@ -87,97 +87,102 @@ public class MainForm extends javax.swing.JFrame {
         fileChooser.showOpenDialog(null);
         File file = fileChooser.getSelectedFile();
 
-        try {
-            DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = f.newDocumentBuilder();
-            Document doc = dBuilder.parse(file);
-            doc.getDocumentElement().normalize();
+        if (file == null) {
+            System.out.println("No se ha seleccionado ningun archivo.");
+        } else {
 
-            //Lee la dimension del tablero
-            NodeList nodo = doc.getElementsByTagName("dimension");
-            for (int i = 0; i < nodo.getLength(); i++) {
-                Node a = nodo.item(i);
-                Element e = (Element) a;
-                System.out.println("Dimension: " + e.getTextContent());
-                palabraPrincipal.dimension = Integer.parseInt(e.getTextContent());
-            }
+            try {
+                DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = f.newDocumentBuilder();
+                Document doc = dBuilder.parse(file);
+                doc.getDocumentElement().normalize();
 
-            //Lee las palabras del diccionario
-            NodeList listadoDiccionario = doc.getElementsByTagName("diccionario");
-            Node dic = listadoDiccionario.item(0);
-            Element palabras = (Element) dic;
-            NodeList listadoPalabra = palabras.getElementsByTagName("palabra");
-
-            for (int i = 0; i < listadoPalabra.getLength(); i++) {
-                Node p = listadoPalabra.item(i);
-                Element e = (Element) p;
-                System.out.println("Palabra: " + e.getTextContent());
-                Palabra temp = new Palabra(e.getTextContent());
-                palabraPrincipal.addPalabra(temp);
-            }
-
-            //Lee los dobles 
-            NodeList listadoDobles = doc.getElementsByTagName("dobles");
-            Node dob = listadoDobles.item(0);
-            Element dobles = (Element) dob;
-            NodeList dobles_def = dobles.getElementsByTagName("casilla");
-
-            for (int i = 0; i < dobles_def.getLength(); i++) {
-                Node px = dobles_def.item(i);
-                Element dx = (Element) px;
-                NodeList listadoX = dx.getElementsByTagName("x");
-                NodeList listadoY = dx.getElementsByTagName("y");
-
-                for (int a = 0; a < listadoX.getLength(); a++) {
-                    Node posX = listadoX.item(0);
-                    Element posXx = (Element) posX;
-                    Node posY = listadoY.item(0);
-                    Element posYy = (Element) posY;
-                    Bonus bo = new Bonus(Integer.parseInt(posXx.getTextContent()), Integer.parseInt(posYy.getTextContent()), 2);
-                    palabraPrincipal.addBonus(bo);
-                    System.out.println("Casilla Doble \n" + "X: " + posXx.getTextContent() + " Y: " + posYy.getTextContent());
+                //Lee la dimension del tablero
+                NodeList nodo = doc.getElementsByTagName("dimension");
+                for (int i = 0; i < nodo.getLength(); i++) {
+                    Node a = nodo.item(i);
+                    Element e = (Element) a;
+                    System.out.println("Dimension: " + e.getTextContent());
+                    palabraPrincipal.dimension = Integer.parseInt(e.getTextContent());
                 }
-            }
 
-            //Lee los triples
-            NodeList listadoTriples = doc.getElementsByTagName("triples");
-            Node trip = listadoTriples.item(0);
-            Element triples = (Element) trip;
-            NodeList triples_def = triples.getElementsByTagName("casilla");
+                //Lee las palabras del diccionario
+                NodeList listadoDiccionario = doc.getElementsByTagName("diccionario");
+                Node dic = listadoDiccionario.item(0);
+                Element palabras = (Element) dic;
+                NodeList listadoPalabra = palabras.getElementsByTagName("palabra");
 
-            for (int i = 0; i < triples_def.getLength(); i++) {
-                Node px = triples_def.item(i);
-                Element dx = (Element) px;
-                NodeList listadoX = dx.getElementsByTagName("x");
-                NodeList listadoY = dx.getElementsByTagName("y");
-
-                for (int a = 0; a < listadoX.getLength(); a++) {
-                    Node posX = listadoX.item(0);
-                    Element posXx = (Element) posX;
-                    Node posY = listadoY.item(0);
-                    Element posYy = (Element) posY;
-                    Bonus bo = new Bonus(Integer.parseInt(posXx.getTextContent()), Integer.parseInt(posYy.getTextContent()), 3);
-                    palabraPrincipal.addBonus(bo);
-                    System.out.println("Casilla Triple\n" + "X: " + posXx.getTextContent() + " Y: " + posYy.getTextContent());
+                for (int i = 0; i < listadoPalabra.getLength(); i++) {
+                    Node p = listadoPalabra.item(i);
+                    Element e = (Element) p;
+                    System.out.println("Palabra: " + e.getTextContent());
+                    Palabra temp = new Palabra(e.getTextContent());
+                    palabraPrincipal.addPalabra(temp);
                 }
-            }
-            JOptionPane.showMessageDialog(this, "El archivo ha sido analizado, presione 'JUGAR' \n para iniciar el juego", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
-            jButton2.setEnabled(true);
 
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.println("Error");
+                //Lee los dobles 
+                NodeList listadoDobles = doc.getElementsByTagName("dobles");
+                Node dob = listadoDobles.item(0);
+                Element dobles = (Element) dob;
+                NodeList dobles_def = dobles.getElementsByTagName("casilla");
+
+                for (int i = 0; i < dobles_def.getLength(); i++) {
+                    Node px = dobles_def.item(i);
+                    Element dx = (Element) px;
+                    NodeList listadoX = dx.getElementsByTagName("x");
+                    NodeList listadoY = dx.getElementsByTagName("y");
+
+                    for (int a = 0; a < listadoX.getLength(); a++) {
+                        Node posX = listadoX.item(0);
+                        Element posXx = (Element) posX;
+                        Node posY = listadoY.item(0);
+                        Element posYy = (Element) posY;
+                        Bonus bo = new Bonus(Integer.parseInt(posXx.getTextContent()), Integer.parseInt(posYy.getTextContent()), 2);
+                        palabraPrincipal.addBonus(bo);
+                        System.out.println("Casilla Doble \n" + "X: " + posXx.getTextContent() + " Y: " + posYy.getTextContent());
+                    }
+                }
+
+                //Lee los triples
+                NodeList listadoTriples = doc.getElementsByTagName("triples");
+                Node trip = listadoTriples.item(0);
+                Element triples = (Element) trip;
+                NodeList triples_def = triples.getElementsByTagName("casilla");
+
+                for (int i = 0; i < triples_def.getLength(); i++) {
+                    Node px = triples_def.item(i);
+                    Element dx = (Element) px;
+                    NodeList listadoX = dx.getElementsByTagName("x");
+                    NodeList listadoY = dx.getElementsByTagName("y");
+
+                    for (int a = 0; a < listadoX.getLength(); a++) {
+                        Node posX = listadoX.item(0);
+                        Element posXx = (Element) posX;
+                        Node posY = listadoY.item(0);
+                        Element posYy = (Element) posY;
+                        Bonus bo = new Bonus(Integer.parseInt(posXx.getTextContent()), Integer.parseInt(posYy.getTextContent()), 3);
+                        palabraPrincipal.addBonus(bo);
+                        System.out.println("Casilla Triple\n" + "X: " + posXx.getTextContent() + " Y: " + posYy.getTextContent());
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "El archivo ha sido analizado, presione 'JUGAR' \n para iniciar el juego", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
+                jButton2.setEnabled(true);
+
+            } catch (ParserConfigurationException | SAXException | IOException e) {
+                System.out.println("Error");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         this.setVisible(false);
         palabraPrincipal.crearTablero(palabraPrincipal.dimension);
         palabraPrincipal.asigArriba();
         palabraPrincipal.asigAbajo();
         palabraPrincipal.retirarIzquierda();
         palabraPrincipal.retirarDerecha();
-        palabraPrincipal.recPosicion(); 
+        palabraPrincipal.recPosicion();
         palabraPrincipal.asignarBonus();
         palabraPrincipal.llenarColaFichas();
         palabraPrincipal.recorrerFichas();
@@ -185,7 +190,7 @@ public class MainForm extends javax.swing.JFrame {
         palabraPrincipal.generarImagenFichasGeneral();
         palabraPrincipal.setVisible(true);
         JOptionPane.showMessageDialog(this, "Debe ingresar Jugadores:\n-Menú Opciones\n-Agregar Jugador \n(Ctrl + A)", "Scrabble dice", JOptionPane.INFORMATION_MESSAGE);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
