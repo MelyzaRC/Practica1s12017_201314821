@@ -616,43 +616,40 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        try{
-         cargarImagenPantallaPalabras();
-        }catch(Exception e){
+        try {
+            cargarImagenPantallaPalabras();
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        
-         try{
-        
-        cargarImagenFichasActivas();
-        }catch(Exception e){
+
+        try {
+
+            cargarImagenFichasActivas();
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-         
-          try{
-        
-         cargarImagenMatriz();
-        
-        }catch(Exception e){
+
+        try {
+
+            cargarImagenMatriz();
+
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-          
-           try{
-        cargarImagenPantalla();
-        }catch(Exception e){
+
+        try {
+            cargarImagenPantalla();
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-           
-            try{
-        cargarImagenFichasGeneral();
-        }catch(Exception e){
+
+        try {
+            cargarImagenFichasGeneral();
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        
-        
-        
-       
-        
+
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     //Creacion de tablero
@@ -1291,7 +1288,7 @@ public class Principal extends javax.swing.JFrame {
             asTemp = primeraFicha;
             System.out.println(index + " - Ingresada Ficha: " + actual.letra);
         } else {
-            actual.anterior= ultimaFicha;
+            actual.anterior = ultimaFicha;
             ultimaFicha.siguiente = actual;
             ultimaFicha = actual;
             //ultimaFicha.siguiente = null;
@@ -1434,7 +1431,7 @@ public class Principal extends javax.swing.JFrame {
             ultimaPalabra = nuevaPalabra;
             ultimaPalabra.siguiente = null;
             generarArchivoPalabras();
-           generarImagenPalabras();
+            generarImagenPalabras();
             System.out.println("Agregada: " + nuevaPalabra.palabra);
         } else {
             System.out.println("Palabra Repetida");
@@ -1486,11 +1483,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     //Fin metodos de palabra 
-    
-    
-    
-    
-    
 
     public void generarArchivoPalabras() {
         String textArchivo = "digraph imagenPalabras{\n";
@@ -1548,7 +1540,7 @@ public class Principal extends javax.swing.JFrame {
 
     public void cargarImagenPantallaPalabras() {
         try {
-            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenPalabras.png"));
+            ImageIcon icono = new javax.swing.ImageIcon("C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenPalabras.png");
             Image imagen = icono.getImage();
             ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
             jLabel1.setIcon(iconoEscalado);
@@ -1690,7 +1682,7 @@ public class Principal extends javax.swing.JFrame {
 
     public void cargarImagenMatriz() {
         try {
-            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenOrtogonal.png"));
+            ImageIcon icono = new javax.swing.ImageIcon("C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenOrtogonal.png");
             Image imagen = icono.getImage();
             ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
             jLabel5.setIcon(iconoEscalado);
@@ -1747,10 +1739,10 @@ public class Principal extends javax.swing.JFrame {
         } finally {
         }
     }
-    
-    public void cargarImagenFichasActivas(){
-     try {
-            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenFichasActivas.png"));
+
+    public void cargarImagenFichasActivas() {
+        try {
+            ImageIcon icono = new javax.swing.ImageIcon("C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichasActivas.png");
             Image imagen = icono.getImage();
             ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
             jLabel4.setIcon(iconoEscalado);
@@ -1769,11 +1761,11 @@ public class Principal extends javax.swing.JFrame {
             if (bandera == jugadorActual.primera && bandera == jugadorActual.ultima) {
                 textArchivo = textArchivo + bandera.letra + ";";
             } else if (bandera == jugadorActual.primera) {
-                textArchivo = textArchivo + bandera.letra+"->";
+                textArchivo = textArchivo + bandera.letra + "->";
             } else if (bandera == jugadorActual.ultima) {
-                textArchivo = textArchivo+ bandera.letra + ";\n";
+                textArchivo = textArchivo + bandera.letra + ";\n";
             } else {
-                textArchivo = textArchivo + bandera.letra + ";\n" + bandera.letra+ "->" ;
+                textArchivo = textArchivo + bandera.letra + ";\n" + bandera.letra + "->";
             }
             bandera = bandera.siguiente;
         } while (bandera != null);
@@ -1794,22 +1786,22 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void archivoFichasGeneral() {
-        
+
         String textArchivo = "digraph imagenFichas{\n";
-int inte = 0;
+        int inte = 0;
         Ficha bandera = new Ficha();
         bandera = ultimaFicha;
         char a = 34;
         do {
-             
+
             if (bandera == primeraFicha && bandera == ultimaFicha) {
-                textArchivo = textArchivo + bandera.letra+String.valueOf(inte) + ";";
+                textArchivo = textArchivo + bandera.letra + String.valueOf(inte) + ";";
             } else if (bandera == ultimaFicha) {
-                textArchivo = textArchivo + a + bandera.letra+String.valueOf(inte) + a;
+                textArchivo = textArchivo + a + bandera.letra + String.valueOf(inte) + a;
             } else if (bandera == primeraFicha) {
-                textArchivo = textArchivo + "->" + a + bandera.letra +String.valueOf(inte)+ a + ";\n";
+                textArchivo = textArchivo + "->" + a + bandera.letra + String.valueOf(inte) + a + ";\n";
             } else {
-                textArchivo = textArchivo + "->" + a + bandera.letra+String.valueOf(inte) + a + ";\n" + bandera.letra+String.valueOf(inte);
+                textArchivo = textArchivo + "->" + a + bandera.letra + String.valueOf(inte) + a + ";\n" + bandera.letra + String.valueOf(inte);
             }
             inte++;
             bandera = bandera.anterior;
@@ -1849,22 +1841,22 @@ int inte = 0;
         } finally {
         }
     }
-    
-    public void cargarImagenFichasGeneral(){
-     try {
-            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenFichas.png"));
+
+    public void cargarImagenFichasGeneral() {
+        try {
+            ImageIcon icono = new javax.swing.ImageIcon("C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenFichas.png");
             Image imagen = icono.getImage();
             ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
             jLabel6.setIcon(iconoEscalado);
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-    
+
     }
 
     public void cargarImagenPantalla() {
         try {
-            ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource("imagenJugador.png"));
+            ImageIcon icono = new javax.swing.ImageIcon("C:\\Users\\MelyzaR\\Documents\\GitHub\\Practica1s12017_201314821\\Practica1Estructuras\\src\\practica1estructuras\\imagenJugador.png");
             Image imagen = icono.getImage();
             ImageIcon iconoEscalado = new ImageIcon(imagen.getScaledInstance(275, 460, Image.SCALE_SMOOTH));
             jLabel7.setIcon(iconoEscalado);
