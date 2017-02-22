@@ -605,8 +605,8 @@ public class Principal extends javax.swing.JFrame {
         asignarFichasAJugador();
         verEnLabels();
         //recorrerFichas();
-        //ArchivoFichasActivas();
-        //  generarImagenFichasActivas();
+     ArchivoFichasActivas();
+       generarImagenFichasActivas();
         imprimirJugadores();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -1752,6 +1752,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void ArchivoFichasActivas() {
+        int counter=0;
         String textArchivo = "digraph imagenFichasActivas{\n";
 
         Ficha bandera = new Ficha();
@@ -1759,14 +1760,15 @@ public class Principal extends javax.swing.JFrame {
 
         do {
             if (bandera == jugadorActual.primera && bandera == jugadorActual.ultima) {
-                textArchivo = textArchivo + bandera.letra + ";";
+                textArchivo = textArchivo + bandera.letra+String.valueOf(counter) + ";";
             } else if (bandera == jugadorActual.primera) {
-                textArchivo = textArchivo + bandera.letra + "->";
+                textArchivo = textArchivo + bandera.letra +String.valueOf(counter) + "->";
             } else if (bandera == jugadorActual.ultima) {
-                textArchivo = textArchivo + bandera.letra + ";\n";
+                textArchivo = textArchivo + bandera.letra +String.valueOf(counter) + ";\n";
             } else {
-                textArchivo = textArchivo + bandera.letra + ";\n" + bandera.letra + "->";
+                textArchivo = textArchivo + bandera.letra +String.valueOf(counter) + ";\n" + bandera.letra +String.valueOf(counter) + "->";
             }
+            counter++;
             bandera = bandera.siguiente;
         } while (bandera != null);
         textArchivo = textArchivo + "}";
