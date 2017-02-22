@@ -796,6 +796,36 @@ public class Principal extends javax.swing.JFrame {
         String textArchivo = "digraph imagenPalabras{\n";
 
         Posicion bandera = new Posicion();
+        bandera = ultimaPosicion;
+        do{
+            Posicion bandera2 = new Posicion();
+            bandera2 = bandera;
+            
+            do{
+                 String cosa = "Pos" + String.valueOf(bandera2.fila) + String.valueOf(bandera2.columna + String.valueOf(bandera2.fila));
+            
+            
+                if(bandera2.abajo == null){
+                textArchivo = textArchivo + cosa + "->";
+                }else if(bandera2.arriba == null){
+                textArchivo = textArchivo + cosa + ";\n";
+                }else{
+                textArchivo = textArchivo + cosa+";\n"+cosa+"->";
+                }
+                
+            bandera2 = bandera2.arriba;
+            }while(bandera2 != null);
+            
+        bandera = bandera.izquierda;
+        }while(bandera != null);
+        
+        
+        
+        
+        
+        
+        
+        
         bandera = primeraPosicion;
         
         do{
@@ -817,12 +847,7 @@ public class Principal extends javax.swing.JFrame {
             bandera = bandera.derecha;
         }while(bandera != null);
         
-        
-        
-        
-        
-        
-        
+          
         bandera = primeraPosicion;
 
         do {
@@ -871,6 +896,7 @@ public class Principal extends javax.swing.JFrame {
 
             bandera = bandera.arriba;
         } while (bandera != null);
+      
 
         textArchivo = textArchivo + "}";
 
